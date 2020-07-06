@@ -6,7 +6,7 @@
   "scripts": {
     "build": "ts-node src/index.ts",
     "dev": "ts-node-dev --transpileOnly --ignore-watch node_modules src/index.ts",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "author": "Vinicius A. L. Souza",
   "license": "Apache-2.0",
@@ -15,5 +15,11 @@
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.50",
     "typescript": "^3.9.6"
-  }
+  },
+	"jest": {
+		"testEnvironment": "node",
+		"coveragePathIgnorePatterns": [
+		  "/node_modules/"
+		]
+	}
 }
