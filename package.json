@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
+    "build": "ts-node src/index.ts",
     "test": "jest"
   },
   "author": "",
