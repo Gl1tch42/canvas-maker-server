@@ -9,6 +9,7 @@
     "test": "jest"
   },
   "author": "Vinicius A. L. Souza",
+  "license": "Apache-2.0",
   "devDependencies": {
     "jest": "^26.1.0",
     "ts-node": "^8.10.2",
