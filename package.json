@@ -24,5 +24,12 @@
   },
   "dependencies": {
     "express": "^4.17.1"
-  }
+  },
+	"jest": {
+	  "preset": "ts-jest",
+		"testEnvironment": "node",
+		"coveragePathIgnorePatterns": [
+			"/node_modules/"
+		]
+	}
 }
