@@ -8,8 +8,7 @@
     "dev": "ts-node-dev --transpileOnly --ignore-watch node_modules src/index.ts",
     "test": "jest"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Vinicius A. L. Souza",
   "devDependencies": {
     "jest": "^26.1.0",
     "ts-node": "^8.10.2",
