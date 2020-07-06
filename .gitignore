@@ -1,1 +1,6 @@
+# Project installed modules.
 node_modules/
+
+# Project configuration information that is not supposed to be shared.
+configuration/*
+!configuration/.gitkeep
