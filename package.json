@@ -1,7 +1,7 @@
 {
   "name": "canvas_maker2",
   "version": "1.0.0",
-  "description": "",
+  "description": "Canvas Maker is an online tool to help entrepreneurs design their canval and start developing their company.",
   "main": "src/index.ts",
   "scripts": {
     "build": "ts-node src/index.ts",
