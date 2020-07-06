@@ -1,0 +1,14 @@
+{
+  "name": "canvas_maker2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^3.9.6"
+  }
+}
