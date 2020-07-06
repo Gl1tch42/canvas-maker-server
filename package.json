@@ -5,6 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "ts-node src/index.ts",
+    "dev": "ts-node-dev --transpileOnly --ignore-watch node_modules src/index.ts",
     "test": "jest"
   },
   "author": "",
