@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "express-validator": "^6.6.0",
     "helmet": "^3.23.3",
     "mysql2": "^2.1.0"
   },
