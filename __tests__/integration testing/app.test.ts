@@ -5,9 +5,9 @@ import app from '../../src/app';
 
 describe('Check api responses:', () => {
 
-	it('Responds 204 to /', done => {
+	it('Responds 204 to api/', done => {
 		request(app)
-			.get('/')
+			.get('/api')
 			.expect(204, done);
 	});
 
