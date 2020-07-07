@@ -13,7 +13,7 @@ describe('Check api responses:', () => {
 
 	it('Responds 404 to everything else', done => {
 		request(app)
-			.get('/foo/bar')
+			.get('/wrong/random-path')
 			.expect(404, done);
 	});
 
