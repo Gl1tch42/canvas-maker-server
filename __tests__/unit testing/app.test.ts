@@ -19,7 +19,7 @@ describe('Check api responses:', () => {
 
 	it('Responds 422 when request POST to api/signup with incorect request body', done => {
 		request(app)
-			.get('/api/signup')
+			.post('/api/signup')
 			.expect(422, done);
 	});
 });
