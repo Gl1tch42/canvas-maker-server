@@ -105,6 +105,7 @@
         "no-unreachable-loop": "error",
         "no-unused-expressions": "error",
         "no-unused-vars": ["error", { "varsIgnorePattern": "^_$" }],
+        "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_$" }],
         "no-use-before-define": "error",
         "no-useless-backreference": "error",
         "no-useless-call": "error",
