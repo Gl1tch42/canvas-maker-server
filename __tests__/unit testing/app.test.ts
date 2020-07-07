@@ -16,4 +16,10 @@ describe('Check api responses:', () => {
 			.get('/foo/bar')
 			.expect(404, done);
 	});
+
+	it('Responds 200 to api/signup', done => {
+		request(app)
+			.get('/api/signup')
+			.expect(200, done);
+	});
 });
