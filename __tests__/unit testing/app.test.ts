@@ -17,9 +17,9 @@ describe('Check api responses:', () => {
 			.expect(404, done);
 	});
 
-	it('Responds 200 to api/signup', done => {
+	it('Responds 422 to api/signup with incorect request body', done => {
 		request(app)
 			.get('/api/signup')
-			.expect(200, done);
+			.expect(422, done);
 	});
 });
