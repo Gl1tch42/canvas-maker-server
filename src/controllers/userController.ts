@@ -1,8 +1,13 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { Request, Response } from 'express';
 
-export const signUp = async (req:Request, res:Response):Promise<Response> => {
+class UserController {
 
-	await console.log('UsersController.signUp() called.');
+    signUp = async (req: Request, res: Response): Promise<Response> => {
 
-	return res.status(200).json({ body: req.body });
-};
+    	await console.log('UsersController.signUp() called.');
+    	return res.status(200).json({ body: req.body });
+    };
+}
+
+export default new UserController;
