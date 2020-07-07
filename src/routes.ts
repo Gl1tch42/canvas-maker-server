@@ -5,9 +5,7 @@ import { localAuth } from './models/validationsModel';
 
 const routes = Router();
 
-routes.get('/', (_, res:Response) => {
-	res.status(204).send();
-});
+routes.get('/', (_, res:Response) => res.status(204).send());
 
 routes.post('/signup', validationChecker(localAuth), signUp);
 
