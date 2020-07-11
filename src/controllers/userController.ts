@@ -8,7 +8,6 @@ export = {
 	signUp: async (req: Request, res: Response): Promise<Response> => {
 
 		 const users = await userQueries.allUsers();
-		// const [rows, _] = await connection.query('SELECT * FROM userIdentity');
 
 		return res.status(200).json({ saldjflkasjd: users });
 	},
