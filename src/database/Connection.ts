@@ -1,12 +1,14 @@
-import credentials from '../../secure/database.credentials';
+import dotenv from 'dotenv';
 import { createPool } from 'mysql2';
+
+dotenv.config({ path: 'secure/.env' });
 
 const pool = createPool({
 
-	database: credentials.DATABASE,
-	host: credentials.HOST,
-	user: credentials.USER,
-	password: credentials.PASSWORD,
+	database: 'canvasMaker',
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASSWORD,
 
 	waitForConnections: true,
 	connectionLimit: 10,
