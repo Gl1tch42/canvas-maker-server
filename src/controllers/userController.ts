@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { Request, Response } from 'express';
-import UserQueries from '../database/userQueries';
+import UserQueries from '../database/UserQueries';
 // import connection from '../database/Connection';
 
 export = {
