@@ -1,6 +1,16 @@
 import { body } from 'express-validator';
 
-export const localAuth = [
+export const createLocalUser = [
+	body('name')
+		.exists()
+		.withMessage('Name field missing.')
+		.trim(),
+
+	body('nickName')
+		.exists()
+		.withMessage('Nickname field missing.')
+		.trim(),
+
 	body('email')
 		.exists()
 		.withMessage('Email field missing.')
