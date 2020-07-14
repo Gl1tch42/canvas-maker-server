@@ -9,6 +9,6 @@ routes.get('/', (_, res:Response) => res.status(204).send());
 
 routes.post('/signup', validationChecker(createLocalUser), userController.signUp);
 // routes.post('/signin', userController.signIn);
-routes.get('/secret', userController.secret);
+// routes.get('/secret', userController.secret);
 
 export default routes;
