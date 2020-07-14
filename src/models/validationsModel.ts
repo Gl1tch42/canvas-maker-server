@@ -6,7 +6,7 @@ export const createLocalUser = [
 		.withMessage('Name field missing.')
 		.trim(),
 
-	body('nickName')
+	body('nickname')
 		.exists()
 		.withMessage('Nickname field missing.')
 		.trim(),
