@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { Request, Response } from 'express';
 import UserQueries from '../database/UserQueries';
+import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
 
 dotenv.config({ path: 'secure/.env' });
