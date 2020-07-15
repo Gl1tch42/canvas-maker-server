@@ -21,21 +21,26 @@ export default class UserController {
 
 	public static async signUp (req: Request, res: Response): Promise<Response> {
 
-		const newUser:User = {
-			name: req.body.name,
-			nickname: req.body.nickname,
-			email: req.body.email,
-			password: req.body.password
-		};
-
 		try {
-			const doesUserExist = await UserQueries.lookForUser(newUser);
+
+			const newUserAccount: UserAccount = {
+				name: req.body.name,
+				nickname: req.body.nickname,
+				email: req.body.email
+			};
+
+			const newUserLocalAuth: UserLocalAuth = {
+				email: req.body.email,
+				password: await bcrypt.hash(req.body.password, 10)
+			};
+
+			const doesUserExist = await UserQueries.lookForUser(newUserAccount);
 
 			if (doesUserExist)
 				return res.status(403).json({ 'Message': 'User already exist.' });
 
 
-			return res.status(200).json({ doesUserExist });
+			return res.status(200).json({ newUserLocalAuth });
 		}
 		catch (error) {
 
