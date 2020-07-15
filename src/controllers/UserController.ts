@@ -39,11 +39,11 @@ export default class UserController {
 			if (doesUserExist)
 				return res.status(403).json({ 'Message': 'User already exist.' });
 
+			await UserQueries.createLocalUser(newUserAccount, newUserLocalAuth);
 
 			return res.status(200).json({ newUserLocalAuth });
 		}
 		catch (error) {
-
 			return res.status(500).json({ error });
 		}
 	}
