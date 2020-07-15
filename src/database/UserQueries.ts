@@ -1,9 +1,14 @@
 import connection from './Connection';
 import { RowDataPacket, OkPacket, ResultSetHeader } from 'mysql2';
 
-interface User {
+interface UserAccount {
 	name: string,
 	nickname: string,
+	email: string
+}
+
+interface UserLocalAuth {
+	AccountsId: number,
 	email: string,
 	password: string
 }
