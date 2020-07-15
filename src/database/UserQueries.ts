@@ -20,7 +20,7 @@ export default class UserQueries {
 		return rows;
 	}
 
-	public static async lookForUser(newUser:User):Promise<boolean> {
+	public static async lookForUser(newUser:UserAccount):Promise<boolean> {
 
 		return await new Promise((resolve, reject) => {
 			connection.query(
