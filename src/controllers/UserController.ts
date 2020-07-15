@@ -6,11 +6,15 @@ import bcrypt from 'bcrypt';
 
 dotenv.config({ path: 'secure/.env' });
 
-interface User {
+interface UserAccount {
 	name: string,
 	nickname: string,
+	email: string
+}
+
+interface UserLocalAuth {
 	email: string,
-	password: string,
+	password: string
 }
 
 export default class UserController {
