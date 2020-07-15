@@ -14,9 +14,19 @@ interface UserLocalAuth {
 
 export default class UserQueries {
 
-	public static async allUsers():Promise<RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader> {
-		const [rows, _] = await connection.query('SELECT * FROM Accounts');
-		return rows;
+	public static async createLocalUser(newUser:UserAccount):Promise<RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader> {
+
+		return await new Promise((resolve, reject) => {
+			connection.query(
+				'SELECT * FROM Accounts',
+				(error, result) => {
+					if (error)
+						return reject(error);
+
+					return resolve(result);
+				}
+			);
+		});
 	}
 
 	public static async lookForUser(newUser:UserAccount):Promise<boolean> {
