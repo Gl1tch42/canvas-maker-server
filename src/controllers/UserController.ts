@@ -31,7 +31,7 @@ export default class UserController {
 
 			const newUserLocalAuth: UserLocalAuth = {
 				email: req.body.email,
-				password: await bcrypt.hash(req.body.password, 10)
+				password: await bcrypt.hash(req.body.password, Number(process.env.BCRYPT_SALT_ROUNDS!))
 			};
 
 			const doesUserExist = await UserQueries.lookForUser(newUserAccount);
