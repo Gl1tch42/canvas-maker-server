@@ -23,12 +23,18 @@ export default class UserController {
 			password: req.body.password
 		};
 
-		return res.status(200).json({ saldjflkasjd: users });
-	}
+		try {
+			const doesUserExist = await UserQueries.lookForUser(newUser);
 
-	// public static async signIn(req: Request, res: Response): Promise<Response> {
+			if (doesUserExist)
+				return res.status(403).json({ 'Message': 'User already exist.' });
 
-	//	jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+
+		}
+		catch (error) {
+
+			return res.status(500).json({ error });
+		}
 
 	//	return res.status(200).json({ user });
 	// }
