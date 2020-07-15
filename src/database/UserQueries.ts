@@ -15,4 +15,23 @@ export default class UserQueries {
 		return rows;
 	}
 
+	public static async lookForUser(newUser:User):Promise<boolean> {
+
+		return await new Promise((resolve, reject) => {
+			connection.query(
+				'SELECT * FROM Accounts WHERE nickname = ? OR email = ?',
+				[newUser.nickname, newUser.email],
+				(error, result) => {
+
+					if (error)
+						return reject(error);
+
+					if (Array.isArray(result) && result.length > 0)
+						return resolve(true);
+
+					return resolve(false);
+				}
+			);
+		});
+	}
 }
