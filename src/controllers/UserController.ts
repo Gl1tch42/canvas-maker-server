@@ -30,18 +30,11 @@ export default class UserController {
 				return res.status(403).json({ 'Message': 'User already exist.' });
 
 
+			return res.status(200).json({ doesUserExist });
 		}
 		catch (error) {
 
 			return res.status(500).json({ error });
 		}
-
-	//	return res.status(200).json({ user });
-	// }
-
-	public static async secret (req: Request, res: Response): Promise<Response> {
-
-		await console.log('Secret reveled');
-		return res.status(200).send({ secret: 'asdfasdf' });
 	}
 }
