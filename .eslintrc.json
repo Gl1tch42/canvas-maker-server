@@ -17,6 +17,8 @@
         "@typescript-eslint"
     ],
     "rules": {
+		"@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_$" }],
+		"@typescript-eslint/no-non-null-assertion": "off",
         "accessor-pairs": "warn",
         "array-bracket-newline": ["error", "consistent"],
         "array-bracket-spacing": "error",
@@ -86,7 +88,7 @@
         "no-new": "error",
         "no-new-func": "error",
         "no-new-object": "error",
-        "no-new-wrappers": "error",
+		"no-new-wrappers": "error",
         "no-octal-escape": "error",
         "no-param-reassign": "error",
         "no-proto": "error",
@@ -106,7 +108,6 @@
         "no-unreachable-loop": "error",
         "no-unused-expressions": "error",
         "no-unused-vars": ["error", { "varsIgnorePattern": "^_$" }],
-        "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_$" }],
         "no-use-before-define": "error",
         "no-useless-backreference": "error",
         "no-useless-call": "error",
