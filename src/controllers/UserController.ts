@@ -5,6 +5,13 @@ import UserQueries from '../database/UserQueries';
 
 dotenv.config({ path: 'secure/.env' });
 
+interface User {
+	name: string,
+	nickname: string,
+	email: string,
+	password: string,
+}
+
 export default class UserController {
 
 	public static async signUp (req: Request, res: Response): Promise<Response> {
