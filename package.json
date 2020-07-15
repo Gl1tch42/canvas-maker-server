@@ -11,6 +11,7 @@
   "author": "Vinicius A. L. Souza",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.6",
     "@types/helmet": "0.0.47",
     "@types/jest": "^26.0.3",
