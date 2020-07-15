@@ -16,7 +16,12 @@ export default class UserController {
 
 	public static async signUp (req: Request, res: Response): Promise<Response> {
 
-		const users = await UserQueries.createUser();
+		const newUser:User = {
+			name: req.body.name,
+			nickname: req.body.nickname,
+			email: req.body.email,
+			password: req.body.password
+		};
 
 		return res.status(200).json({ saldjflkasjd: users });
 	}
