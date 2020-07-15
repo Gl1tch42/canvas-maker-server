@@ -8,7 +8,6 @@ interface UserAccount {
 }
 
 interface UserLocalAuth {
-	AccountsId: number,
 	email: string,
 	password: string
 }
