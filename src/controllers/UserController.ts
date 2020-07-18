@@ -19,6 +19,16 @@ interface UserLocalAuth {
 
 export default class UserController {
 
+	private static async signToken(userId:number):Promise<string> {
+		return await jwt.sign({ userId },
+			process.env.JWT_SECRET_KEY!,
+			{
+				issuer: 'Canvas Maker',
+				expiresIn: '15m'
+			}
+		);
+	}
+
 	public static async signUp (req: Request, res: Response): Promise<Response> {
 
 		try {
@@ -39,16 +49,11 @@ export default class UserController {
 			if (doesUserExist)
 				return res.status(403).json({ 'Message': 'User already exist.' });
 
-			const newUserId = await UserQueries.createLocalUser(newUserAccount, newUserLocalAuth);
+			const userId = await UserQueries.createLocalUser(newUserAccount, newUserLocalAuth);
 
-			await jwt.sign({
-				iss: 'Canvas Maker',
-				sub: newUserId
-			}, '', {
-				expiresIn: '1d'
-			});
+			const jwtCode = await UserController.signToken(userId);
 
-			return res.status(200).json({ newUserLocalAuth });
+			return res.status(200).json({ jwtCode });
 		}
 		catch (error) {
 			return res.status(500).json({ error });
