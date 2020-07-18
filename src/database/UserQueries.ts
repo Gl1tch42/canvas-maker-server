@@ -32,7 +32,7 @@ export default class UserQueries {
 	public static async lookForUser(newUser:UserAccount):Promise<boolean> {
 
 		return await new Promise((resolve, reject) => {
-			connection.query(
+			pool.query(
 				'SELECT * FROM Accounts WHERE nickname = ? OR email = ?',
 				[newUser.nickname, newUser.email],
 				(error, result) => {
