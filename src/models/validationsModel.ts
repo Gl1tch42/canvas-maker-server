@@ -25,5 +25,5 @@ export const createLocalUser = [
 		.withMessage('Password field missing.')
 		.if(body('password').exists())
 		.isLength({ min: 7 })
-		.withMessage('Password field is invalid. Password should be at least 7 characters long.'),
+		.withMessage('Password field is invalid. Password should be at least 7 characters long.')
 ];
