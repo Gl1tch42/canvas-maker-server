@@ -51,7 +51,7 @@ export default class UserController {
 
 			const userId = await UserQueries.createLocalUser(newUserAccount, newUserLocalAuth);
 
-			const jwtCode = await UserController.signToken(userId);
+			const jwtCode = UserController.signToken(userId);
 
 			return res.status(200).json({ jwtCode });
 		}
