@@ -28,8 +28,6 @@ describe('Checks POST request on api/signup route:', () => {
 			'password': faker.internet.password()
 		};
 
-		console.log(requestBody);
-
 		request(app)
 			.post('/api/signup')
 			.send(requestBody)
