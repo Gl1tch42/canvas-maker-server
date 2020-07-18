@@ -17,43 +17,37 @@ export default class UserQueries {
 	public static createLocalUser(newUserAccount: UserAccount, newUserLocalAuth: UserLocalAuth):Promise<void> {
 
 		return new Promise((resolve, reject) => {
-			pool.getConnection((error, connection) => {
+			pool.getConnection((errorPool, connection) => {
 
-				if (error) reject(error);
+				if (errorPool) reject(errorPool);
 
-				connection.beginTransaction(error => {
+				connection.beginTransaction(errorTransaction => {
 
-					if (error) reject(error);
+					if (errorTransaction) reject(errorTransaction);
 
 					connection.query(
 						'INSERT INTO Accounts SET name=?, nickname=?, email=?',
 						[newUserAccount.name, newUserAccount.nickname, newUserAccount.email],
-						(error, results: OkPacket) => {
+						(errorQuery, results: OkPacket) => {
 
-							if (error) {
-								return connection.rollback(() => {
-									reject(error);
-								});
-							}
+							if (errorQuery)
+								connection.rollback(() => reject(errorQuery));
 
 							const insertedAccountId = results.insertId;
 
 							connection.query(
 								'INSERT INTO LocalAuth SET AccountsId=?, email=?, password=?',
 								[insertedAccountId, newUserLocalAuth.email, newUserLocalAuth.password],
-								error => {
-									if (error) {
-										return pool.rollback(() => {
-											reject(error);
-										});
-									}
+								errQuery => {
 
-									connection.commit(error => {
-										if (error) {
-											return connection.rollback(() => {
-												reject(error);
-											});
-										}
+									if (errQuery)
+										connection.rollback(() => reject(errQuery));
+
+									connection.commit(err => {
+
+										if (err)
+											connection.rollback(() => reject(err));
+
 										resolve();
 									});
 								}
