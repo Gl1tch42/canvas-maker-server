@@ -14,18 +14,54 @@ interface UserLocalAuth {
 
 export default class UserQueries {
 
-	public static async createLocalUser(newUser:UserAccount):Promise<RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader> {
+	public static createLocalUser(newUserAccount: UserAccount, newUserLocalAuth: UserLocalAuth):Promise<void> {
 
-		return await new Promise((resolve, reject) => {
-			connection.query(
-				'SELECT * FROM Accounts',
-				(error, result) => {
-					if (error)
-						return reject(error);
+		return new Promise((resolve, reject) => {
+			pool.getConnection((error, connection) => {
 
-					return resolve(result);
-				}
-			);
+				if (error) reject(error);
+
+				connection.beginTransaction(error => {
+
+					if (error) reject(error);
+
+					connection.query(
+						'INSERT INTO Accounts SET name=?, nickname=?, email=?',
+						[newUserAccount.name, newUserAccount.nickname, newUserAccount.email],
+						(error, results: OkPacket) => {
+
+							if (error) {
+								return connection.rollback(() => {
+									reject(error);
+								});
+							}
+
+							const insertedAccountId = results.insertId;
+
+							connection.query(
+								'INSERT INTO LocalAuth SET AccountsId=?, email=?, password=?',
+								[insertedAccountId, newUserLocalAuth.email, newUserLocalAuth.password],
+								error => {
+									if (error) {
+										return pool.rollback(() => {
+											reject(error);
+										});
+									}
+
+									connection.commit(error => {
+										if (error) {
+											return connection.rollback(() => {
+												reject(error);
+											});
+										}
+										resolve();
+									});
+								}
+							);
+						}
+					);
+				});
+			});
 		});
 	}
 
