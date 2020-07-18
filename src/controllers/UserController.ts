@@ -34,7 +34,7 @@ export default class UserController {
 				password: await bcrypt.hash(req.body.password, Number(process.env.BCRYPT_SALT_ROUNDS!))
 			};
 
-			const doesUserExist = await UserQueries.lookForUser(newUserAccount);
+			const doesUserExist = await UserQueries.canFindUser(newUserAccount);
 
 			if (doesUserExist)
 				return res.status(403).json({ 'Message': 'User already exist.' });
