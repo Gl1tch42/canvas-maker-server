@@ -51,9 +51,9 @@ export default class UserController {
 
 			const userId = await UserQueries.createLocalUser(newUserAccount, newUserLocalAuth);
 
-			const jwtCode = UserController.signToken(userId);
+			const token = UserController.signToken(userId);
 
-			return res.status(200).json({ jwtCode });
+			return res.status(200).json({ token });
 		}
 		catch (error) {
 			return res.status(500).json({ error });
