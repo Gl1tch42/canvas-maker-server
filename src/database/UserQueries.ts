@@ -1,5 +1,5 @@
 import pool from './Connection';
-import { OkPacket } from 'mysql2';
+import { OkPacket, FieldPacket, RowDataPacket } from 'mysql2';
 
 interface UserAccount {
 	name: string,
@@ -14,68 +14,46 @@ interface UserLocalAuth {
 
 export default class UserQueries {
 
-	public static createLocalUser(newUserAccount: UserAccount, newUserLocalAuth: UserLocalAuth):Promise<void> {
+	public static async createLocalUser(newUserAccount: UserAccount, newUserLocalAuth: UserLocalAuth):Promise<void> {
 
-		return new Promise((resolve, reject) => {
-			pool.getConnection((errorPool, connection) => {
+		const connection = await pool.getConnection();
 
-				if (errorPool) reject(errorPool);
+		try {
 
-				connection.beginTransaction(errorTransaction => {
+			await connection.beginTransaction();
 
-					if (errorTransaction) reject(errorTransaction);
+			const [userAccount, _]:[OkPacket, FieldPacket[]] = await connection.query(
+				'INSERT INTO Accounts SET name=?, nickname=?, email=?',
+				[newUserAccount.name, newUserAccount.nickname, newUserAccount.email]);
 
-					connection.query(
-						'INSERT INTO Accounts SET name=?, nickname=?, email=?',
-						[newUserAccount.name, newUserAccount.nickname, newUserAccount.email],
-						(errorQuery, results: OkPacket) => {
+			const insertedAccountId = userAccount.insertId;
 
-							if (errorQuery)
-								connection.rollback(() => reject(errorQuery));
+			await connection.query(
+				'INSERT INTO LocalAuth SET AccountsId=?, email=?, password=?',
+				[insertedAccountId, newUserLocalAuth.email, newUserLocalAuth.password]);
 
-							const insertedAccountId = results.insertId;
+			await connection.commit();
+		}
 
-							connection.query(
-								'INSERT INTO LocalAuth SET AccountsId=?, email=?, password=?',
-								[insertedAccountId, newUserLocalAuth.email, newUserLocalAuth.password],
-								errQuery => {
+		catch (error) {
+			await connection.rollback();
+			throw error;
+		}
 
-									if (errQuery)
-										connection.rollback(() => reject(errQuery));
-
-									connection.commit(err => {
-
-										if (err)
-											connection.rollback(() => reject(err));
-
-										resolve();
-									});
-								}
-							);
-						}
-					);
-				});
-			});
-		});
+		finally {
+			connection.release();
+		}
 	}
 
-	public static async lookForUser(newUser:UserAccount):Promise<boolean> {
+	public static async canFindUser(newUser:UserAccount):Promise<boolean> {
 
-		return await new Promise((resolve, reject) => {
-			pool.query(
-				'SELECT * FROM Accounts WHERE nickname = ? OR email = ?',
-				[newUser.nickname, newUser.email],
-				(error, result) => {
+		const [foundUsers, _]:[RowDataPacket[], FieldPacket[]] = await pool.query(
+			'SELECT * FROM Accounts WHERE nickname = ? OR email = ?',
+			[newUser.nickname, newUser.email]);
 
-					if (error)
-						return reject(error);
+		if (foundUsers.length > 0)
+			return true;
 
-					if (Array.isArray(result) && result.length > 0)
-						return resolve(true);
-
-					return resolve(false);
-				}
-			);
-		});
+		return false;
 	}
 }
