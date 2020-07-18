@@ -1,5 +1,4 @@
-import connection from './Connection';
-import { RowDataPacket, OkPacket, ResultSetHeader } from 'mysql2';
+import { OkPacket } from 'mysql2';
 
 interface UserAccount {
 	name: string,
