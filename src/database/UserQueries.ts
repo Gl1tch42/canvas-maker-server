@@ -59,4 +59,15 @@ export default class UserQueries {
 
 		return false;
 	}
+
+	public static async findById(userId:number):Promise<number|null> {
+
+		const [foundId, _]:[RowDataPacket[], FieldPacket[]] = await pool.query(
+			'SELECT id FROM Accounts WHERE id = ?', userId);
+
+		if (foundId.length === 1)
+			return foundId[0]['id'];
+
+		return null;
+	}
 }
