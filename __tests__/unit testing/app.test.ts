@@ -1,5 +1,6 @@
 import request from 'supertest';
 import app from '../../src/app';
+import faker from 'faker';
 
 describe('Checks if API is up:', () => {
 
@@ -21,8 +22,10 @@ describe('Checks POST request on api/signup route:', () => {
 	it('Responds 200 to correct request body.', done => {
 
 		const requestBody = {
-			'email': 'me@email.com',
-			'password': 'asdflkjasdlfj',
+			'name': faker.name,
+			'nickname': faker.internet.userName,
+			'email': faker.internet.email,
+			'password': faker.internet.password
 		};
 
 		request(app)
@@ -43,7 +46,7 @@ describe('Checks POST request on api/signup route:', () => {
 
 		const requestBody = {
 			'email': 'meemail.com',
-			'password': 'asdflkjasdlfj',
+			'password': 'asdflkjasdlfj'
 		};
 
 		request(app)
@@ -57,7 +60,7 @@ describe('Checks POST request on api/signup route:', () => {
 
 		const requestBody = {
 			'email': 'meemail.com',
-			'password': 'asdj',
+			'password': 'asdj'
 		};
 
 		request(app)
@@ -70,7 +73,7 @@ describe('Checks POST request on api/signup route:', () => {
 	it('Responds 422 to missing email on request body.', done => {
 
 		const requestBody = {
-			'password': 'asdflkjasdlfj',
+			'password': 'asdflkjasdlfj'
 		};
 
 		request(app)
@@ -83,7 +86,7 @@ describe('Checks POST request on api/signup route:', () => {
 	it('Responds 422 to missing password on request body.', done => {
 
 		const requestBody = {
-			'email': 'meemail.com',
+			'email': 'meemail.com'
 		};
 
 		request(app)
