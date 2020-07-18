@@ -70,4 +70,15 @@ export default class UserQueries {
 
 		return null;
 	}
+
+	public static async findByEmail(userEmail:string):Promise<[number, string]|[null, null]> {
+
+		const [user, _]:[RowDataPacket[], FieldPacket[]] = await pool.query(
+			'SELECT * FROM LocalAuth WHERE email = ?', userEmail);
+
+		if (user.length > 0)
+			return [user[0].AccountsId, user[0].password];
+
+		return [null, null];
+	}
 }
