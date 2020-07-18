@@ -19,8 +19,8 @@ interface UserLocalAuth {
 
 export default class UserController {
 
-	private static async signToken(userId:number):Promise<string> {
-		return await jwt.sign({ userId },
+	private static signToken(userId:number):string {
+		return jwt.sign({ userId },
 			process.env.JWT_SECRET_KEY!,
 			{
 				issuer: 'Canvas Maker',
