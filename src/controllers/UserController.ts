@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import { Request, Response } from 'express';
 import UserQueries from '../database/UserQueries';
 import bcrypt from 'bcrypt';
-// import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 dotenv.config({ path: 'secure/.env' });
 
@@ -39,7 +39,14 @@ export default class UserController {
 			if (doesUserExist)
 				return res.status(403).json({ 'Message': 'User already exist.' });
 
-			await UserQueries.createLocalUser(newUserAccount, newUserLocalAuth);
+			const newUserId = await UserQueries.createLocalUser(newUserAccount, newUserLocalAuth);
+
+			await jwt.sign({
+				iss: 'Canvas Maker',
+				sub: newUserId
+			}, '', {
+				expiresIn: '1d'
+			});
 
 			return res.status(200).json({ newUserLocalAuth });
 		}
