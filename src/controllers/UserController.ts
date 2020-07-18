@@ -21,7 +21,7 @@ export default class UserController {
 
 	private static signToken(userId:number):string {
 		return jwt.sign({ userId },
-			process.env.JWT_SECRET_KEY!,
+			process.env.ACCESS_TOKEN_SECRET!,
 			{
 				issuer: 'Canvas Maker',
 				expiresIn: '15m'
@@ -59,4 +59,35 @@ export default class UserController {
 			return res.status(500).json({ error });
 		}
 	}
+
+	public static async signIn(req: Request, res: Response): Promise<Response> {
+
+		try {
+			const [userId, password] = await UserQueries.findByEmail(req.body.email);
+
+			if (!userId || !password)
+				return res.status(404).send('User does not exist.');
+
+
+			const match = await bcrypt.compare(req.body.password, password);
+
+
+			if (match) {
+
+				const token = UserController.signToken(userId);
+				return res.status(200).json({ token });
+			}
+
+			return res.status(401).send('Incorrect password.');
+
+		}
+		catch (error) {
+			return res.status(500).json(error);
+		}
+	}
+
+	// public static secret(req: Request, res: Response): Response {
+
+	//	return res.status(200).json({ msg: 'I got here.' });
+	// }
 }
