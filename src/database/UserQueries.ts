@@ -14,9 +14,10 @@ interface UserLocalAuth {
 
 export default class UserQueries {
 
-	public static async createLocalUser(newUserAccount: UserAccount, newUserLocalAuth: UserLocalAuth):Promise<void> {
+	public static async createLocalUser(newUserAccount: UserAccount, newUserLocalAuth: UserLocalAuth):Promise<number> {
 
 		const connection = await pool.getConnection();
+		let newUserId:number;
 
 		try {
 
@@ -26,11 +27,11 @@ export default class UserQueries {
 				'INSERT INTO Accounts SET name=?, nickname=?, email=?',
 				[newUserAccount.name, newUserAccount.nickname, newUserAccount.email]);
 
-			const insertedAccountId = userAccount.insertId;
+			newUserId = userAccount.insertId;
 
 			await connection.query(
 				'INSERT INTO LocalAuth SET AccountsId=?, email=?, password=?',
-				[insertedAccountId, newUserLocalAuth.email, newUserLocalAuth.password]);
+				[newUserId, newUserLocalAuth.email, newUserLocalAuth.password]);
 
 			await connection.commit();
 		}
@@ -43,6 +44,8 @@ export default class UserQueries {
 		finally {
 			connection.release();
 		}
+
+		return newUserId;
 	}
 
 	public static async canFindUser(newUser:UserAccount):Promise<boolean> {
