@@ -1,3 +1,4 @@
+import pool from './Connection';
 import { OkPacket } from 'mysql2';
 
 interface UserAccount {
