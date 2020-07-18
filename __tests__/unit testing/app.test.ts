@@ -22,11 +22,13 @@ describe('Checks POST request on api/signup route:', () => {
 	it('Responds 200 to correct request body.', done => {
 
 		const requestBody = {
-			'name': faker.name,
-			'nickname': faker.internet.userName,
-			'email': faker.internet.email,
-			'password': faker.internet.password
+			'name': faker.name.findName(),
+			'nickname': faker.internet.userName(),
+			'email': faker.internet.email(),
+			'password': faker.internet.password()
 		};
+
+		console.log(requestBody);
 
 		request(app)
 			.post('/api/signup')
@@ -45,8 +47,10 @@ describe('Checks POST request on api/signup route:', () => {
 	it('Responds 422 to incorrect email on request body.', done => {
 
 		const requestBody = {
-			'email': 'meemail.com',
-			'password': 'asdflkjasdlfj'
+			'name': faker.name.findName(),
+			'nickname': faker.internet.userName(),
+			'email': 'incorrectemail.com',
+			'password': faker.internet.password()
 		};
 
 		request(app)
@@ -59,8 +63,10 @@ describe('Checks POST request on api/signup route:', () => {
 	it('Responds 422 to incorrect too short password on request body.', done => {
 
 		const requestBody = {
-			'email': 'meemail.com',
-			'password': 'asdj'
+			'name': faker.name.findName(),
+			'nickname': faker.internet.userName(),
+			'email': faker.internet.email(),
+			'password': 'abc'
 		};
 
 		request(app)
@@ -73,7 +79,9 @@ describe('Checks POST request on api/signup route:', () => {
 	it('Responds 422 to missing email on request body.', done => {
 
 		const requestBody = {
-			'password': 'asdflkjasdlfj'
+			'name': faker.name.findName(),
+			'nickname': faker.internet.userName(),
+			'password': faker.internet.password()
 		};
 
 		request(app)
@@ -86,7 +94,39 @@ describe('Checks POST request on api/signup route:', () => {
 	it('Responds 422 to missing password on request body.', done => {
 
 		const requestBody = {
-			'email': 'meemail.com'
+			'name': faker.name.findName(),
+			'nickname': faker.internet.userName(),
+			'email': faker.internet.email()
+		};
+
+		request(app)
+			.post('/api/signup')
+			.send(requestBody)
+			.expect('Content-Type', /json/u)
+			.expect(422, done);
+	});
+
+	it('Responds 422 to missing name on request body.', done => {
+
+		const requestBody = {
+			'nickname': faker.internet.userName(),
+			'email': faker.internet.email(),
+			'password': faker.internet.password()
+		};
+
+		request(app)
+			.post('/api/signup')
+			.send(requestBody)
+			.expect('Content-Type', /json/u)
+			.expect(422, done);
+	});
+
+	it('Responds 422 to missing nickname on request body.', done => {
+
+		const requestBody = {
+			'name': faker.name.findName(),
+			'email': faker.internet.email(),
+			'password': faker.internet.password()
 		};
 
 		request(app)
