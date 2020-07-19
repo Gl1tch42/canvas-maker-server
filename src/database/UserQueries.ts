@@ -12,6 +12,22 @@ interface UserLocalAuth {
 	password: string
 }
 
+interface Account extends RowDataPacket {
+	id: number,
+	name: string,
+	nickname: string,
+	email: string,
+	pictureName: string,
+	createdIn: number,
+	lastAccess: number
+}
+
+interface LocalAuth extends RowDataPacket {
+	AccountsId: number,
+	email: string,
+	password: string
+}
+
 export default class UserQueries {
 
 	public static async createLocalUser(newUserAccount: UserAccount, newUserLocalAuth: UserLocalAuth):Promise<number> {
