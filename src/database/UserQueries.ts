@@ -76,25 +76,25 @@ export default class UserQueries {
 		return false;
 	}
 
-	public static async findById(userId:number):Promise<number|null> {
+	public static async findAccountById(accountId:number):Promise<Account|null> {
 
-		const [foundId, _]:[RowDataPacket[], FieldPacket[]] = await pool.query(
-			'SELECT id FROM Accounts WHERE id = ?', userId);
+		const [account, _]:[Account[], FieldPacket[]] = await pool.query(
+			'SELECT id FROM Accounts WHERE id = ?', accountId);
 
-		if (foundId.length === 1)
-			return foundId[0]['id'];
+		if (account.length > 0)
+			return account[0];
 
 		return null;
 	}
 
-	public static async findByEmail(userEmail:string):Promise<[number, string]|[null, null]> {
+	public static async findLocalByEmail(userEmail:string):Promise<LocalAuth|null> {
 
-		const [user, _]:[RowDataPacket[], FieldPacket[]] = await pool.query(
+		const [localAuth, _]:[LocalAuth[], FieldPacket[]] = await pool.query(
 			'SELECT * FROM LocalAuth WHERE email = ?', userEmail);
 
-		if (user.length > 0)
-			return [user[0].AccountsId, user[0].password];
+		if (localAuth.length > 0)
+			return localAuth[0];
 
-		return [null, null];
+		return null;
 	}
 }

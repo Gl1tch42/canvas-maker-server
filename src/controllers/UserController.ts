@@ -63,23 +63,20 @@ export default class UserController {
 	public static async signIn(req: Request, res: Response): Promise<Response> {
 
 		try {
-			const [userId, password] = await UserQueries.findByEmail(req.body.email);
+			const localUser = await UserQueries.findLocalByEmail(req.body.email);
 
-			if (!userId || !password)
+			if (!localUser)
 				return res.status(404).send('User does not exist.');
 
-
-			const match = await bcrypt.compare(req.body.password, password);
+			const match = await bcrypt.compare(req.body.password, localUser.password);
 
 
 			if (match) {
-
-				const token = UserController.signToken(userId);
+				const token = UserController.signToken(localUser.AccountsId);
 				return res.status(200).json({ token });
 			}
 
 			return res.status(401).send('Incorrect password.');
-
 		}
 		catch (error) {
 			return res.status(500).json(error);
