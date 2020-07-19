@@ -5,6 +5,7 @@ describe('Checks POST request on api/signup route:', () => {
 
 	it('Responds 403 when request to create already existent user.', done => {
 		const requestBody = {
+			'method': 'local',
 			'name': 'test',
 			'nickname': 'test',
 			'email': 'test@test.com',

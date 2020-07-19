@@ -22,6 +22,7 @@ describe('Checks POST request on api/signup route:', () => {
 	it('Responds 200 to correct request body.', done => {
 
 		const requestBody = {
+			'method': 'local',
 			'name': faker.name.findName(),
 			'nickname': faker.internet.userName(),
 			'email': faker.internet.email(),
@@ -35,16 +36,17 @@ describe('Checks POST request on api/signup route:', () => {
 			.expect(200, done);
 	});
 
-	it('Responds 422 to empty request body.', done => {
+	it('Responds 400 to empty request body.', done => {
 		request(app)
 			.post('/api/signup')
 			.expect('Content-Type', /json/u)
-			.expect(422, done);
+			.expect(400, done);
 	});
 
-	it('Responds 422 to incorrect email on request body.', done => {
+	it('Responds 400 to incorrect email on request body.', done => {
 
 		const requestBody = {
+			'method': 'local',
 			'name': faker.name.findName(),
 			'nickname': faker.internet.userName(),
 			'email': 'incorrectemail.com',
@@ -55,12 +57,13 @@ describe('Checks POST request on api/signup route:', () => {
 			.post('/api/signup')
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
-			.expect(422, done);
+			.expect(400, done);
 	});
 
-	it('Responds 422 to incorrect too short password on request body.', done => {
+	it('Responds 400 to incorrect too short password on request body.', done => {
 
 		const requestBody = {
+			'method': 'local',
 			'name': faker.name.findName(),
 			'nickname': faker.internet.userName(),
 			'email': faker.internet.email(),
@@ -71,12 +74,13 @@ describe('Checks POST request on api/signup route:', () => {
 			.post('/api/signup')
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
-			.expect(422, done);
+			.expect(400, done);
 	});
 
-	it('Responds 422 to missing email on request body.', done => {
+	it('Responds 400 to missing email on request body.', done => {
 
 		const requestBody = {
+			'method': 'local',
 			'name': faker.name.findName(),
 			'nickname': faker.internet.userName(),
 			'password': faker.internet.password()
@@ -86,12 +90,13 @@ describe('Checks POST request on api/signup route:', () => {
 			.post('/api/signup')
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
-			.expect(422, done);
+			.expect(400, done);
 	});
 
-	it('Responds 422 to missing password on request body.', done => {
+	it('Responds 400 to missing password on request body.', done => {
 
 		const requestBody = {
+			'method': 'local',
 			'name': faker.name.findName(),
 			'nickname': faker.internet.userName(),
 			'email': faker.internet.email()
@@ -101,12 +106,13 @@ describe('Checks POST request on api/signup route:', () => {
 			.post('/api/signup')
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
-			.expect(422, done);
+			.expect(400, done);
 	});
 
-	it('Responds 422 to missing name on request body.', done => {
+	it('Responds 400 to missing name on request body.', done => {
 
 		const requestBody = {
+			'method': 'local',
 			'nickname': faker.internet.userName(),
 			'email': faker.internet.email(),
 			'password': faker.internet.password()
@@ -116,12 +122,13 @@ describe('Checks POST request on api/signup route:', () => {
 			.post('/api/signup')
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
-			.expect(422, done);
+			.expect(400, done);
 	});
 
-	it('Responds 422 to missing nickname on request body.', done => {
+	it('Responds 400 to missing nickname on request body.', done => {
 
 		const requestBody = {
+			'method': 'local',
 			'name': faker.name.findName(),
 			'email': faker.internet.email(),
 			'password': faker.internet.password()
@@ -131,6 +138,6 @@ describe('Checks POST request on api/signup route:', () => {
 			.post('/api/signup')
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
-			.expect(422, done);
+			.expect(400, done);
 	});
 });
