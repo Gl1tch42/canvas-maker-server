@@ -1,7 +1,5 @@
 import { Router, Response } from 'express';
 import userController from './controllers/UserController';
-import { validationChecker } from './controllers/validationController';
-import ValidationSchemas from './models/validationsModel';
 import Validation from './models/Validation';
 
 const routes = Router();
