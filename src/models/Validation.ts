@@ -50,8 +50,9 @@ export default class Validation {
 		await Promise.all(validations.map(validation => validation.run(req)));
 
 		const errors = validationResult(req);
-		if (errors.isEmpty()) {
-			return next();
+		if (!errors.isEmpty()) {
+			res.status(400).json({ errors: errors.array() });
+			return;
 		}
 
 		const isUserNew = await UserQueries.isUserNew(req.body.nickname, req.body.email);
@@ -61,6 +62,8 @@ export default class Validation {
 			return;
 		}
 
+		next();
+	}
 
 	public static async signin(req: Request, res: Response, next: NextFunction):Promise<void> {
 
@@ -98,11 +101,12 @@ export default class Validation {
 		await Promise.all(validations.map(validation => validation.run(req)));
 
 		const errors = validationResult(req);
-		if (errors.isEmpty()) {
-			return next();
+		if (!errors.isEmpty()) {
+			res.status(400).json({ errors: errors.array() });
+			return;
 		}
 
-		res.status(400).json({ errors: errors.array() });
+		next();
 	}
 
 }
