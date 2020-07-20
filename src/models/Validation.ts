@@ -3,12 +3,14 @@ import { body, validationResult, ValidationChain } from 'express-validator';
 
 export default class Validation {
 
-	public static async signup(req: Request, res: Response, next: NextFunction):Promise<Response|void> {
+	public static async signup(req: Request, res: Response, next: NextFunction):Promise<void> {
 
 		const method = req.body.method;
 
-		if (!method)
-			return res.status(400).json({ error: 'Method field is missing.' });
+		if (!method) {
+			res.status(400).json({ error: 'Method field is missing.' });
+			return;
+		}
 
 		let validations: ValidationChain[];
 
@@ -54,12 +56,15 @@ export default class Validation {
 		res.status(400).json({ errors: errors.array() });
 	}
 
-	public static async signin(req: Request, res: Response, next: NextFunction):Promise<Response|void> {
+
+	public static async signin(req: Request, res: Response, next: NextFunction):Promise<void> {
 
 		const method = req.body.method;
 
-		if (!method)
-			return res.status(400).json({ error: 'Method field is missing.' });
+		if (!method) {
+			res.status(400).json({ error: 'Method field is missing.' });
+			return;
+		}
 
 		let validations: ValidationChain[];
 
