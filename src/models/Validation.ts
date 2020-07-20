@@ -54,8 +54,12 @@ export default class Validation {
 			return next();
 		}
 
-		res.status(400).json({ errors: errors.array() });
-	}
+		const isUserNew = await UserQueries.isUserNew(req.body.nickname, req.body.email);
+
+		if (!isUserNew) {
+			res.status(403).json({ 'Message': 'User already exist.' });
+			return;
+		}
 
 
 	public static async signin(req: Request, res: Response, next: NextFunction):Promise<void> {
