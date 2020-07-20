@@ -35,7 +35,7 @@ export default class Validation {
 						.trim()
 						.isEmail()
 						.normalizeEmail()
-						.withMessage('Email field is invalid.'),
+						.withMessage('Email field is invalid. Email format is incorrect.'),
 
 					body('password')
 						.exists()
@@ -79,7 +79,7 @@ export default class Validation {
 						.trim()
 						.isEmail()
 						.normalizeEmail()
-						.withMessage('Email field is invalid.'),
+						.withMessage('Email field is invalid. Email format is incorrect.'),
 
 					body('password')
 						.exists()
