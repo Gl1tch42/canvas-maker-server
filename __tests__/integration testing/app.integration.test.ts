@@ -14,10 +14,7 @@ describe('Checks POST request on api/signup route:', () => {
 
 		request(app)
 			.post('/api/signup')
-			.send(requestBody);
-
-		request(app)
-			.post('/api/signup')
+			.send(requestBody)
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
 			.expect(403, done);
