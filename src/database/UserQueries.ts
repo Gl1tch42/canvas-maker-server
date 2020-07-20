@@ -1,16 +1,6 @@
 import pool from './Connection';
 import { OkPacket, FieldPacket, RowDataPacket } from 'mysql2';
 
-interface UserAccount {
-	name: string,
-	nickname: string,
-	email: string
-}
-
-interface UserLocalAuth {
-	email: string,
-	password: string
-}
 
 interface Account extends RowDataPacket {
 	id: number,
@@ -30,7 +20,7 @@ interface LocalAuth extends RowDataPacket {
 
 export default class UserQueries {
 
-	public static async createLocalUser(newUserAccount: UserAccount, newUserLocalAuth: UserLocalAuth):Promise<number> {
+	public static async createLocalUser(name:string, nickname:string, email:string, password: string):Promise<number> {
 
 		const connection = await pool.getConnection();
 		let newUserId:number;
@@ -41,13 +31,13 @@ export default class UserQueries {
 
 			const [userAccount, _]:[OkPacket, FieldPacket[]] = await connection.query(
 				'INSERT INTO Accounts SET name=?, nickname=?, email=?',
-				[newUserAccount.name, newUserAccount.nickname, newUserAccount.email]);
+				[name, nickname, email]);
 
 			newUserId = userAccount.insertId;
 
 			await connection.query(
 				'INSERT INTO LocalAuth SET AccountsId=?, email=?, password=?',
-				[newUserId, newUserLocalAuth.email, newUserLocalAuth.password]);
+				[newUserId, email, password]);
 
 			await connection.commit();
 		}
