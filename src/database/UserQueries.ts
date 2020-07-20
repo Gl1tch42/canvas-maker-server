@@ -64,16 +64,16 @@ export default class UserQueries {
 		return newUserId;
 	}
 
-	public static async canFindUser(newUser:UserAccount):Promise<boolean> {
+	public static async isUserNew(nickname:string, email:string):Promise<boolean> {
 
 		const [foundUsers, _]:[RowDataPacket[], FieldPacket[]] = await pool.query(
 			'SELECT * FROM Accounts WHERE nickname = ? OR email = ?',
-			[newUser.nickname, newUser.email]);
+			[nickname, email]);
 
 		if (foundUsers.length > 0)
-			return true;
+			return false;
 
-		return false;
+		return true;
 	}
 
 	public static async findAccountById(accountId:number):Promise<Account|null> {
