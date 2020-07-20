@@ -19,7 +19,6 @@ export default class UserController {
 	public static async signUp (req: Request, res: Response): Promise<Response> {
 
 		try {
-
 			const userName: string = req.body.name;
 			const userNickname: string = req.body.nickname;
 			const userEmail: string = req.body.email;
@@ -45,15 +44,15 @@ export default class UserController {
 			if (!localUser)
 				return res.status(404).send('User does not exist.');
 
+
 			const match = await bcrypt.compare(req.body.password, localUser.password);
 
+			if (!match)
+				return res.status(401).send('Incorrect password.');
 
-			if (match) {
-				const token = UserController.signToken(localUser.AccountsId);
-				return res.status(200).json({ token });
-			}
 
-			return res.status(401).send('Incorrect password.');
+			const token = UserController.signToken(localUser.AccountsId);
+			return res.status(200).json({ token });
 		}
 		catch (error) {
 			return res.status(500).json(error);
