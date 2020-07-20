@@ -77,10 +77,10 @@ export default class UserQueries {
 		return null;
 	}
 
-	public static async findLocalByEmail(userEmail:string):Promise<LocalAuth|null> {
+	public static async findLocalByEmail(email:string):Promise<LocalAuth|null> {
 
 		const [localAuth, _]:[LocalAuth[], FieldPacket[]] = await pool.query(
-			'SELECT * FROM LocalAuth WHERE email = ?', userEmail);
+			'SELECT * FROM LocalAuth WHERE email = ?', email);
 
 		if (localAuth.length > 0)
 			return localAuth[0];
