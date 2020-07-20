@@ -42,11 +42,6 @@ export default class UserController {
 				password: await bcrypt.hash(req.body.password, Number(process.env.BCRYPT_SALT_ROUNDS!))
 			};
 
-			const doesUserExist = await UserQueries.canFindUser(newUserAccount);
-
-			if (doesUserExist)
-				return res.status(403).json({ 'Message': 'User already exist.' });
-
 			const userId = await UserQueries.createLocalUser(newUserAccount, newUserLocalAuth);
 
 			const token = UserController.signToken(userId);
