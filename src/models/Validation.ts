@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { body, validationResult, ValidationChain } from 'express-validator';
+import UserQueries from '../database/UserQueries';
 
 export default class Validation {
 
