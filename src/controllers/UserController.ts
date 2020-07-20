@@ -6,16 +6,6 @@ import jwt from 'jsonwebtoken';
 
 dotenv.config({ path: 'secure/.env' });
 
-interface UserAccount {
-	name: string,
-	nickname: string,
-	email: string
-}
-
-interface UserLocalAuth {
-	email: string,
-	password: string
-}
 
 export default class UserController {
 
@@ -31,18 +21,13 @@ export default class UserController {
 
 		try {
 
-			const newUserAccount: UserAccount = {
-				name: req.body.name,
-				nickname: req.body.nickname,
-				email: req.body.email
-			};
+			const userName: string = req.body.name;
+			const userNickname: string = req.body.nickname;
+			const userEmail: string = req.body.email;
+			const userHashedPassword: string = await bcrypt.hash(req.body.password, Number(process.env.BCRYPT_SALT_ROUNDS!));
 
-			const newUserLocalAuth: UserLocalAuth = {
-				email: req.body.email,
-				password: await bcrypt.hash(req.body.password, Number(process.env.BCRYPT_SALT_ROUNDS!))
-			};
+			const userId = await UserQueries.createLocalUser(userName, userNickname, userEmail, userHashedPassword);
 
-			const userId = await UserQueries.createLocalUser(newUserAccount, newUserLocalAuth);
 
 			const token = UserController.signToken(userId);
 
