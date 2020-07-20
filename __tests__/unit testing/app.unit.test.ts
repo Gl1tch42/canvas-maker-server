@@ -140,4 +140,21 @@ describe('Checks POST request on api/signup route:', () => {
 			.expect('Content-Type', /json/u)
 			.expect(400, done);
 	});
+
+	it('Responds 403 when requested to create already existent user.', done => {
+		const requestBody = {
+			'method': 'local',
+			'name': 'test',
+			'nickname': 'test',
+			'email': 'test@test.com',
+			'password': 'testest'
+		};
+
+		request(app)
+			.post('/api/signup')
+			.send(requestBody)
+			.send(requestBody)
+			.expect('Content-Type', /json/u)
+			.expect(403, done);
+	});
 });
