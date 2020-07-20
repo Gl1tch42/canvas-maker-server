@@ -20,13 +20,11 @@ interface UserLocalAuth {
 export default class UserController {
 
 	private static signToken(userId:number):string {
-		return jwt.sign({ userId },
-			process.env.ACCESS_TOKEN_SECRET!,
-			{
-				issuer: 'Canvas Maker',
-				expiresIn: '15m'
-			}
-		);
+		return jwt.sign({
+			iss: 'Canvas Maker',
+			sub: userId,
+			exp: '15m'
+		}, process.env.ACCESS_TOKEN_SECRET!);
 	}
 
 	public static async signUp (req: Request, res: Response): Promise<Response> {
