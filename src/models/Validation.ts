@@ -64,7 +64,7 @@ export default class Validation {
 			];
 		}
 		else {
-			res.status(400).json({ 'Error': 'Method is invalid.' });
+			res.status(400).json({ 'Error': 'Method field is invalid.' });
 			return;
 		}
 
