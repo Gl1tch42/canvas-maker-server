@@ -61,16 +61,13 @@ export default class Validation {
 			throw new Error('Invalid method.');
 		}
 
-		await Promise.all(validations.map(validation => validation.run(req)));
 
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			res.status(400).json({ errors: errors.array() });
+		const isValidRequest = await Validation.validateRequest(req, res, validations);
+		if (!isValidRequest)
 			return;
-		}
+
 
 		const isUserNew = await UserQueries.isUserNew(req.body.nickname, req.body.email);
-
 		if (!isUserNew) {
 			res.status(403).json({ 'Message': 'User already exist.' });
 			return;
