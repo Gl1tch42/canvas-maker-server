@@ -4,7 +4,18 @@ import UserQueries from '../database/UserQueries';
 
 export default class Validation {
 
-	public static async signup(req: Request, res: Response, next: NextFunction):Promise<void> {
+	private static async validateRequest(req:Request, res:Response, validations: ValidationChain[]):Promise<boolean> {
+
+		await Promise.all(validations.map(validation => validation.run(req)));
+
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			res.status(400).json({ errors: errors.array() });
+			return false;
+		}
+
+		return true;
+	}
 
 		const method = req.body.method;
 
