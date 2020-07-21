@@ -110,11 +110,9 @@ export default class Validation {
 			throw new Error('Invalid method.');
 		}
 
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			res.status(400).json({ errors: errors.array() });
+		const isValidRequest = await Validation.validateRequest(req, res, validations);
+		if (!isValidRequest)
 			return;
-		}
 
 		next();
 	}
