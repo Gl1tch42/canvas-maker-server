@@ -26,6 +26,12 @@ export default class Validation {
 		res.status(400).json({ error: 'Method field is missing.' });
 	}
 
+	public static async signup(req: Request, res: Response, next: NextFunction):Promise<void> {
+
+		const method = Validation.getRequestMethod(req, res);
+		if (!method) return;
+
+
 		let validations: ValidationChain[];
 
 		if (method === 'local') {
@@ -78,12 +84,8 @@ export default class Validation {
 
 	public static async signin(req: Request, res: Response, next: NextFunction):Promise<void> {
 
-		const method = req.body.method;
-
-		if (!method) {
-			res.status(400).json({ error: 'Method field is missing.' });
-			return;
-		}
+		const method = Validation.getRequestMethod(req, res);
+		if (!method) return;
 
 		let validations: ValidationChain[];
 
