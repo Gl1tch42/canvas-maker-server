@@ -15,36 +15,37 @@ export default class Validation {
 
 		let validations: ValidationChain[];
 
-		switch (method) {
-			case 'local':
-			default:
-				validations = [
-					body('name')
-						.exists()
-						.withMessage('Name field missing.')
-						.trim(),
+		if (method === 'local') {
+			validations = [
+				body('name')
+					.exists()
+					.withMessage('Name field missing.')
+					.trim(),
 
-					body('nickname')
-						.exists()
-						.withMessage('Nickname field missing.')
-						.trim(),
+				body('nickname')
+					.exists()
+					.withMessage('Nickname field missing.')
+					.trim(),
 
-					body('email')
-						.exists()
-						.withMessage('Email field missing.')
-						.if(body('email').exists())
-						.trim()
-						.isEmail()
-						.normalizeEmail()
-						.withMessage('Email field is invalid. Email format is incorrect.'),
+				body('email')
+					.exists()
+					.withMessage('Email field missing.')
+					.if(body('email').exists())
+					.trim()
+					.isEmail()
+					.normalizeEmail()
+					.withMessage('Email field is invalid. Email format is incorrect.'),
 
-					body('password')
-						.exists()
-						.withMessage('Password field missing.')
-						.if(body('password').exists())
-						.isLength({ min: 7 })
-						.withMessage('Password field is invalid. Password should be at least 7 characters long.')
-				];
+				body('password')
+					.exists()
+					.withMessage('Password field missing.')
+					.if(body('password').exists())
+					.isLength({ min: 7 })
+					.withMessage('Password field is invalid. Password should be at least 7 characters long.')
+			];
+		}
+		else {
+			throw new Error('Invalid method.');
 		}
 
 		await Promise.all(validations.map(validation => validation.run(req)));
@@ -76,29 +77,28 @@ export default class Validation {
 
 		let validations: ValidationChain[];
 
-		switch (method) {
-			case 'local':
-			default:
-				validations = [
-					body('email')
-						.exists()
-						.withMessage('Email field missing.')
-						.if(body('email').exists())
-						.trim()
-						.isEmail()
-						.normalizeEmail()
-						.withMessage('Email field is invalid. Email format is incorrect.'),
+		if (method === 'local') {
+			validations = [
+				body('email')
+					.exists()
+					.withMessage('Email field missing.')
+					.if(body('email').exists())
+					.trim()
+					.isEmail()
+					.normalizeEmail()
+					.withMessage('Email field is invalid. Email format is incorrect.'),
 
-					body('password')
-						.exists()
-						.withMessage('Password field missing.')
-						.if(body('password').exists())
-						.isLength({ min: 7 })
-						.withMessage('Password field is invalid. Password should be at least 7 characters long.')
-				];
+				body('password')
+					.exists()
+					.withMessage('Password field missing.')
+					.if(body('password').exists())
+					.isLength({ min: 7 })
+					.withMessage('Password field is invalid. Password should be at least 7 characters long.')
+			];
 		}
-
-		await Promise.all(validations.map(validation => validation.run(req)));
+		else {
+			throw new Error('Invalid method.');
+		}
 
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
