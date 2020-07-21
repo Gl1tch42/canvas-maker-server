@@ -17,12 +17,14 @@ export default class Validation {
 		return true;
 	}
 
+	private static getRequestMethod(req: Request, res: Response): string|void {
 		const method = req.body.method;
 
-		if (!method) {
-			res.status(400).json({ error: 'Method field is missing.' });
-			return;
-		}
+		if (method)
+			return method;
+
+		res.status(400).json({ error: 'Method field is missing.' });
+	}
 
 		let validations: ValidationChain[];
 
