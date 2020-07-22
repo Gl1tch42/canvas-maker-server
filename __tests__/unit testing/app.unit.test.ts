@@ -240,4 +240,21 @@ describe('Checks POST request on api/signup route:', () => {
 
 describe('Checks POST request on api/signin route:', () => {
 
+	it('Responds 400 to missing method on request body.', done => {
+
+		const requestBody = {
+			'name': faker.name.findName(),
+			'nickname': faker.internet.userName(),
+			'email': faker.internet.email(),
+			'password': faker.internet.password()
+		};
+
+		request(app)
+			.post('/api/signup')
+			.send(requestBody)
+			.expect('Content-Type', /json/u)
+			.expect(400, {
+				'errors': ['Method field is missing.']
+			}, done);
+	});
 });
