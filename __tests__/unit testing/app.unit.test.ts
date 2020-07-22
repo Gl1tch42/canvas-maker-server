@@ -343,5 +343,23 @@ describe('Checks POST request on api/signin route:', () => {
 					'errors': ['A user with this email does not exist.']
 				}, done);
 		});
+
+
+		it('Responds 401 to wrong password on request body.', done => {
+
+			const signinRequestBody = {
+				'method': 'local',
+				'email': 'test@test.com',
+				'password': faker.internet.password()
+			};
+
+			request(app)
+				.post('/api/signin')
+				.send(signinRequestBody)
+				.expect('Content-Type', /json/u)
+				.expect(401, {
+					'errors': ['Incorrect password.']
+				}, done);
+		});
 	});
 });
