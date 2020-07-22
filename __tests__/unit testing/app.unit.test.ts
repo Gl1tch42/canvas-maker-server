@@ -25,7 +25,7 @@ describe('Checks POST request on api/signup route:', () => {
 			.post('/api/signup')
 			.expect('Content-Type', /json/u)
 			.expect(400, {
-				'errors': [{ 'msg': 'Method field is missing.' }]
+				'errors': ['Method field is missing.']
 			}, done);
 	});
 
@@ -44,7 +44,7 @@ describe('Checks POST request on api/signup route:', () => {
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
 			.expect(400, {
-				'errors': [{ 'msg': 'Method field is missing.' }]
+				'errors': ['Method field is missing.']
 			}, done);
 	});
 
@@ -64,7 +64,7 @@ describe('Checks POST request on api/signup route:', () => {
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
 			.expect(400, {
-				'errors': [{ 'msg': 'Method field is invalid.' }]
+				'errors': ['Method field is invalid.']
 			}, done);
 	});
 
@@ -105,7 +105,7 @@ describe('Checks POST request on api/signup route:', () => {
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
 				.expect(400, {
-					'errors': [{ 'msg': 'Email format is incorrect.' }]
+					'errors': ['Email format is incorrect.']
 				}, done);
 		});
 
@@ -125,7 +125,7 @@ describe('Checks POST request on api/signup route:', () => {
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
 				.expect(400, {
-					'errors': [{ 'msg': 'Password should be at least 7 characters long.' }]
+					'errors': ['Password should be at least 7 characters long.']
 				}, done);
 		});
 
@@ -144,7 +144,7 @@ describe('Checks POST request on api/signup route:', () => {
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
 				.expect(400, {
-					'errors': [{ 'msg': 'Email field missing.' }]
+					'errors': ['Email field missing.']
 				}, done);
 		});
 
@@ -163,7 +163,7 @@ describe('Checks POST request on api/signup route:', () => {
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
 				.expect(400, {
-					'errors': [{ 'msg': 'Password field missing.' }]
+					'errors': ['Password field missing.']
 				}, done);
 		});
 
@@ -182,7 +182,7 @@ describe('Checks POST request on api/signup route:', () => {
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
 				.expect(400, {
-					'errors': [{ 'msg': 'Name field missing.' }]
+					'errors': ['Name field missing.']
 				}, done);
 		});
 
@@ -201,7 +201,7 @@ describe('Checks POST request on api/signup route:', () => {
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
 				.expect(400, {
-					'errors': [{ 'msg': 'Nickname field missing.' }]
+					'errors': ['Nickname field missing.']
 				}, done);
 		});
 
@@ -221,7 +221,7 @@ describe('Checks POST request on api/signup route:', () => {
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
 				.expect(403, {
-					'errors': [{ 'msg': 'A user already exists with this nickname.' }]
+					'errors': ['A user already exists with this nickname.']
 				}, done);
 		});
 
@@ -241,7 +241,7 @@ describe('Checks POST request on api/signup route:', () => {
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
 				.expect(403, {
-					'errors': [{ 'msg': 'A user already exists with this email.' }]
+					'errors': ['A user already exists with this email.']
 				}, done);
 		});
 	});
