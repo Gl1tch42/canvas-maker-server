@@ -222,7 +222,7 @@ describe('Checks POST request on api/signup route:', () => {
 				'name': faker.name.findName(),
 				'nickname': faker.internet.userName(),
 				'email': 'test@test.com',
-				'password': faker.internet.password()
+				'password': 'password'
 			};
 
 			request(app)
