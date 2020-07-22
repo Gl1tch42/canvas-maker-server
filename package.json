@@ -6,7 +6,7 @@
   "scripts": {
     "build": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "author": "Vinicius A. L. Souza",
   "license": "Apache-2.0",
