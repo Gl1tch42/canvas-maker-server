@@ -10,9 +10,11 @@ export default class Validation {
 
 		await Promise.all(validations.map(validation => validation.run(req)));
 
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			res.status(400).json({ 'errors': errors.array() });
+		const errors = RequestError.expressValidatorErrorsMsgCleaner(
+			validationResult(req).array());
+
+		if (errors.length > 0) {
+			res.status(400).json({ errors });
 			return false;
 		}
 
@@ -26,7 +28,8 @@ export default class Validation {
 		if (method)
 			return method;
 
-		res.status(400).json({ 'errors': [RequestError.missingMethod] });
+		const errors = RequestError.missingMethod;
+		res.status(400).json({ errors });
 	}
 
 
@@ -55,7 +58,8 @@ export default class Validation {
 			];
 		}
 		else {
-			res.status(400).json({ 'errors': [RequestError.invalidMethod] });
+			const errors = RequestError.invalidMethod;
+			res.status(400).json({ errors });
 			return;
 		}
 
@@ -72,11 +76,11 @@ export default class Validation {
 			const errors = [];
 
 			if (existingUserAccount.nickname === req.body.nickname) {
-				errors.push(RequestError.userNicknameAlreadyExists);
+				errors.push(RequestError.userNicknameAlreadyExists[0]);
 			}
 
 			if (existingUserAccount.email === req.body.email) {
-				errors.push(RequestError.userEmailAlreadyExists);
+				errors.push(RequestError.userEmailAlreadyExists[0]);
 			}
 
 			res.status(403).json({ errors });
@@ -107,7 +111,8 @@ export default class Validation {
 			];
 		}
 		else {
-			res.status(400).json({ 'errors': [RequestError.invalidMethod] });
+			const errors = RequestError.invalidMethod;
+			res.status(400).json({ errors });
 			return;
 		}
 
