@@ -244,13 +244,12 @@ describe('Checks POST request on api/signin route:', () => {
 
 		const requestBody = {
 			'name': faker.name.findName(),
-			'nickname': faker.internet.userName(),
 			'email': faker.internet.email(),
 			'password': faker.internet.password()
 		};
 
 		request(app)
-			.post('/api/signup')
+			.post('/api/signin')
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
 			.expect(400, {
@@ -263,14 +262,12 @@ describe('Checks POST request on api/signin route:', () => {
 
 		const requestBody = {
 			'method': faker.random.word(),
-			'name': faker.name.findName(),
-			'nickname': faker.internet.userName(),
 			'email': faker.internet.email(),
 			'password': faker.internet.password()
 		};
 
 		request(app)
-			.post('/api/signup')
+			.post('/api/signin')
 			.send(requestBody)
 			.expect('Content-Type', /json/u)
 			.expect(400, {
