@@ -308,5 +308,22 @@ describe('Checks POST request on api/signin route:', () => {
 					'errors': ['Email field missing.']
 				}, done);
 		});
+
+
+		it('Responds 400 to missing password on request body.', done => {
+
+			const signinRequestBody = {
+				'method': 'local',
+				'email': 'test@test.com'
+			};
+
+			request(app)
+				.post('/api/signin')
+				.send(signinRequestBody)
+				.expect('Content-Type', /json/u)
+				.expect(400, {
+					'errors': ['Password field missing.']
+				}, done);
+		});
 	});
 });
