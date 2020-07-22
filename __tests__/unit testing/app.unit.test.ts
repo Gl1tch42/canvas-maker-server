@@ -291,5 +291,22 @@ describe('Checks POST request on api/signin route:', () => {
 				.expect(/\{"token":\s*"(.)+\.(.)+\.(.)+"\}/u)
 				.expect(200, done);
 		});
+
+
+		it('Responds 400 to missing email on request body.', done => {
+
+			const signinRequestBody = {
+				'method': 'local',
+				'password': 'password'
+			};
+
+			request(app)
+				.post('/api/signin')
+				.send(signinRequestBody)
+				.expect('Content-Type', /json/u)
+				.expect(400, {
+					'errors': ['Email field missing.']
+				}, done);
+		});
 	});
 });
