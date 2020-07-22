@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { body, validationResult, ValidationChain } from 'express-validator';
 import UserQueries from '../database/UserQueries';
+import RequestError from './RequestError';
+
 
 export default class Validation {
 
@@ -10,7 +12,7 @@ export default class Validation {
 
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			res.status(400).json({ errors: errors.array() });
+			res.status(400).json({ 'errors': errors.array() });
 			return false;
 		}
 
@@ -23,7 +25,7 @@ export default class Validation {
 		if (method)
 			return method;
 
-		res.status(400).json({ error: 'Method field is missing.' });
+		res.status(400).json({ 'errors': [RequestError.missingMethod] });
 	}
 
 	public static async signup(req: Request, res: Response, next: NextFunction):Promise<void> {
@@ -64,7 +66,7 @@ export default class Validation {
 			];
 		}
 		else {
-			res.status(400).json({ 'Error': 'Method field is invalid.' });
+			res.status(400).json({ 'errors': [RequestError.invalidMethod] });
 			return;
 		}
 
@@ -74,9 +76,22 @@ export default class Validation {
 			return;
 
 
-		const isUserNew = await UserQueries.isUserNew(req.body.nickname, req.body.email);
-		if (!isUserNew) {
-			res.status(403).json({ 'Message': 'User already exist.' });
+		const existingUserAccount = await UserQueries.findAccountByNickOrEmail(req.body.nickname, req.body.email);
+
+		if (existingUserAccount) {
+
+			const errors = [];
+
+			if (existingUserAccount.nickname === req.body.nickname) {
+				errors.push(RequestError.userNicknameAlreadyExists);
+			}
+
+			if (existingUserAccount.email === req.body.email) {
+				errors.push(RequestError.userEmailAlreadyExists);
+			}
+
+			res.status(403).json({ errors });
+
 			return;
 		}
 
@@ -110,7 +125,8 @@ export default class Validation {
 			];
 		}
 		else {
-			throw new Error('Invalid method.');
+			res.status(400).json({ 'errors': [RequestError.invalidMethod] });
+			return;
 		}
 
 		const isValidRequest = await Validation.validateRequest(req, res, validations);
