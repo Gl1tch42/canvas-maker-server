@@ -19,142 +19,145 @@ describe('Checks if API is up:', () => {
 
 describe('Checks POST request on api/signup route:', () => {
 
-	it('Responds 200 to correct request body.', done => {
+	describe('Check for signup using the local method.', () => {
 
-		const requestBody = {
-			'method': 'local',
-			'name': faker.name.findName(),
-			'nickname': faker.internet.userName(),
-			'email': faker.internet.email(),
-			'password': faker.internet.password()
-		};
+		it('Responds 200 to correct request body.', done => {
 
-		request(app)
-			.post('/api/signup')
-			.send(requestBody)
-			.expect('Content-Type', /json/u)
-			.expect(200, done);
-	});
+			const requestBody = {
+				'method': 'local',
+				'name': faker.name.findName(),
+				'nickname': faker.internet.userName(),
+				'email': faker.internet.email(),
+				'password': faker.internet.password()
+			};
 
-	it('Responds 400 to empty request body.', done => {
-		request(app)
-			.post('/api/signup')
-			.expect('Content-Type', /json/u)
-			.expect(400, done);
-	});
+			request(app)
+				.post('/api/signup')
+				.send(requestBody)
+				.expect('Content-Type', /json/u)
+				.expect(200, done);
+		});
 
-	it('Responds 400 to incorrect email on request body.', done => {
+		it('Responds 400 to empty request body.', done => {
+			request(app)
+				.post('/api/signup')
+				.expect('Content-Type', /json/u)
+				.expect(400, done);
+		});
 
-		const requestBody = {
-			'method': 'local',
-			'name': faker.name.findName(),
-			'nickname': faker.internet.userName(),
-			'email': 'incorrectemail.com',
-			'password': faker.internet.password()
-		};
+		it('Responds 400 to incorrect email on request body.', done => {
 
-		request(app)
-			.post('/api/signup')
-			.send(requestBody)
-			.expect('Content-Type', /json/u)
-			.expect(400, done);
-	});
+			const requestBody = {
+				'method': 'local',
+				'name': faker.name.findName(),
+				'nickname': faker.internet.userName(),
+				'email': 'incorrectemail.com',
+				'password': faker.internet.password()
+			};
 
-	it('Responds 400 to incorrect too short password on request body.', done => {
+			request(app)
+				.post('/api/signup')
+				.send(requestBody)
+				.expect('Content-Type', /json/u)
+				.expect(400, done);
+		});
 
-		const requestBody = {
-			'method': 'local',
-			'name': faker.name.findName(),
-			'nickname': faker.internet.userName(),
-			'email': faker.internet.email(),
-			'password': 'abc'
-		};
+		it('Responds 400 to incorrect too short password on request body.', done => {
 
-		request(app)
-			.post('/api/signup')
-			.send(requestBody)
-			.expect('Content-Type', /json/u)
-			.expect(400, done);
-	});
+			const requestBody = {
+				'method': 'local',
+				'name': faker.name.findName(),
+				'nickname': faker.internet.userName(),
+				'email': faker.internet.email(),
+				'password': 'abc'
+			};
 
-	it('Responds 400 to missing email on request body.', done => {
+			request(app)
+				.post('/api/signup')
+				.send(requestBody)
+				.expect('Content-Type', /json/u)
+				.expect(400, done);
+		});
 
-		const requestBody = {
-			'method': 'local',
-			'name': faker.name.findName(),
-			'nickname': faker.internet.userName(),
-			'password': faker.internet.password()
-		};
+		it('Responds 400 to missing email on request body.', done => {
 
-		request(app)
-			.post('/api/signup')
-			.send(requestBody)
-			.expect('Content-Type', /json/u)
-			.expect(400, done);
-	});
+			const requestBody = {
+				'method': 'local',
+				'name': faker.name.findName(),
+				'nickname': faker.internet.userName(),
+				'password': faker.internet.password()
+			};
 
-	it('Responds 400 to missing password on request body.', done => {
+			request(app)
+				.post('/api/signup')
+				.send(requestBody)
+				.expect('Content-Type', /json/u)
+				.expect(400, done);
+		});
 
-		const requestBody = {
-			'method': 'local',
-			'name': faker.name.findName(),
-			'nickname': faker.internet.userName(),
-			'email': faker.internet.email()
-		};
+		it('Responds 400 to missing password on request body.', done => {
 
-		request(app)
-			.post('/api/signup')
-			.send(requestBody)
-			.expect('Content-Type', /json/u)
-			.expect(400, done);
-	});
+			const requestBody = {
+				'method': 'local',
+				'name': faker.name.findName(),
+				'nickname': faker.internet.userName(),
+				'email': faker.internet.email()
+			};
 
-	it('Responds 400 to missing name on request body.', done => {
+			request(app)
+				.post('/api/signup')
+				.send(requestBody)
+				.expect('Content-Type', /json/u)
+				.expect(400, done);
+		});
 
-		const requestBody = {
-			'method': 'local',
-			'nickname': faker.internet.userName(),
-			'email': faker.internet.email(),
-			'password': faker.internet.password()
-		};
+		it('Responds 400 to missing name on request body.', done => {
 
-		request(app)
-			.post('/api/signup')
-			.send(requestBody)
-			.expect('Content-Type', /json/u)
-			.expect(400, done);
-	});
+			const requestBody = {
+				'method': 'local',
+				'nickname': faker.internet.userName(),
+				'email': faker.internet.email(),
+				'password': faker.internet.password()
+			};
 
-	it('Responds 400 to missing nickname on request body.', done => {
+			request(app)
+				.post('/api/signup')
+				.send(requestBody)
+				.expect('Content-Type', /json/u)
+				.expect(400, done);
+		});
 
-		const requestBody = {
-			'method': 'local',
-			'name': faker.name.findName(),
-			'email': faker.internet.email(),
-			'password': faker.internet.password()
-		};
+		it('Responds 400 to missing nickname on request body.', done => {
 
-		request(app)
-			.post('/api/signup')
-			.send(requestBody)
-			.expect('Content-Type', /json/u)
-			.expect(400, done);
-	});
+			const requestBody = {
+				'method': 'local',
+				'name': faker.name.findName(),
+				'email': faker.internet.email(),
+				'password': faker.internet.password()
+			};
 
-	it('Responds 403 when requested to create already existent user.', done => {
-		const requestBody = {
-			'method': 'local',
-			'name': 'test',
-			'nickname': 'test',
-			'email': 'test@test.com',
-			'password': 'testest'
-		};
+			request(app)
+				.post('/api/signup')
+				.send(requestBody)
+				.expect('Content-Type', /json/u)
+				.expect(400, done);
+		});
 
-		request(app)
-			.post('/api/signup')
-			.send(requestBody)
-			.send(requestBody)
-			.expect('Content-Type', /json/u)
-			.expect(403, done);
+		it('Responds 403 when requested to create already existent user.', done => {
+			const requestBody = {
+				'method': 'local',
+				'name': 'test',
+				'nickname': 'test',
+				'email': 'test@test.com',
+				'password': 'testest'
+			};
+
+			request(app)
+				.post('/api/signup')
+				.send(requestBody)
+				.send(requestBody)
+				.expect('Content-Type', /json/u)
+				.expect(403, done);
+		});
 	});
 });
