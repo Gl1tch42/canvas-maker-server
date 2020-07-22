@@ -236,3 +236,8 @@ describe('Checks POST request on api/signup route:', () => {
 		});
 	});
 });
+
+
+describe('Checks POST request on api/signin route:', () => {
+
+});
