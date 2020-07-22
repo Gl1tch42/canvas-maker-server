@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import UserQueries from '../database/UserQueries';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import RequestError from '../models/RequestError';
 
 dotenv.config({ path: 'secure/.env' });
 
@@ -43,13 +44,13 @@ export default class UserController {
 			const localUser = await UserQueries.findLocalByEmail(req.body.email);
 
 			if (!localUser)
-				return res.status(404).send('User does not exist.');
+				return res.status(404).json({ 'errors': RequestError.userDoesNotExist });
 
 
 			const match = await bcrypt.compare(req.body.password, localUser.password);
 
 			if (!match)
-				return res.status(401).send('Incorrect password.');
+				return res.status(401).json({ 'errors': RequestError.incorrectPassword });
 
 
 			const token = UserController.signToken(localUser.AccountsId);

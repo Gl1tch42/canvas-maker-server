@@ -22,4 +22,12 @@ export default class RequestError {
 	static get userEmailAlreadyExists(): string[] {
 		return ['A user already exists with this email.'];
 	}
+
+	static get userDoesNotExist(): string[] {
+		return ['A user with this email does not exist.'];
+	}
+
+	static get incorrectPassword(): string[] {
+		return ['Incorrect password.'];
+	}
 }
