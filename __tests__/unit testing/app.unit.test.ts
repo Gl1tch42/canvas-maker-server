@@ -274,4 +274,9 @@ describe('Checks POST request on api/signin route:', () => {
 				'errors': ['Method field is invalid.']
 			}, done);
 	});
+
+
+	describe('Check for signup using the local method.', () => {
+
+	});
 });
