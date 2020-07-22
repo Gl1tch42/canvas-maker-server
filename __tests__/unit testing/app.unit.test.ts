@@ -228,7 +228,6 @@ describe('Checks POST request on api/signup route:', () => {
 			request(app)
 				.post('/api/signup')
 				.send(requestBody)
-				.send(requestBody)
 				.expect('Content-Type', /json/u)
 				.expect(403, {
 					'errors': ['A user already exists with this email.']
@@ -276,7 +275,21 @@ describe('Checks POST request on api/signin route:', () => {
 	});
 
 
-	describe('Check for signup using the local method.', () => {
+	describe('Check for signin using the local method.', () => {
 
+		it('Responds 200 to correct request body.', done => {
+
+			const signinRequestBody = {
+				'method': 'local',
+				'email': 'test@test.com',
+				'password': 'password'
+			};
+
+			request(app)
+				.post('/api/signin')
+				.send(signinRequestBody)
+				.expect(/\{"token":\s*"(.)+\.(.)+\.(.)+"\}/u)
+				.expect(200, done);
+		});
 	});
 });
