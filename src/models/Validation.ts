@@ -19,6 +19,7 @@ export default class Validation {
 		return true;
 	}
 
+
 	private static getRequestMethod(req: Request, res: Response): string|void {
 		const method = req.body.method;
 
@@ -27,6 +28,7 @@ export default class Validation {
 
 		res.status(400).json({ 'errors': [RequestError.missingMethod] });
 	}
+
 
 	public static async signup(req: Request, res: Response, next: NextFunction):Promise<void> {
 
@@ -97,6 +99,7 @@ export default class Validation {
 
 		next();
 	}
+
 
 	public static async signin(req: Request, res: Response, next: NextFunction):Promise<void> {
 
