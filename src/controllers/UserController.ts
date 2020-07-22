@@ -32,7 +32,8 @@ export default class UserController {
 			return res.status(200).json({ token });
 		}
 		catch (error) {
-			return res.status(500).json({ error });
+			console.log(error);
+			return res.status(500).send();
 		}
 	}
 
@@ -55,7 +56,8 @@ export default class UserController {
 			return res.status(200).json({ token });
 		}
 		catch (error) {
-			return res.status(500).json(error);
+			console.log(error);
+			return res.status(500).send();
 		}
 	}
 
