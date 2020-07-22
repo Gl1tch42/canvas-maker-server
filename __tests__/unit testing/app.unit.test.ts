@@ -17,7 +17,57 @@ describe('Checks if API is up:', () => {
 	});
 });
 
+
 describe('Checks POST request on api/signup route:', () => {
+
+	it('Responds 400 to empty request body.', done => {
+		request(app)
+			.post('/api/signup')
+			.expect('Content-Type', /json/u)
+			.expect(400, {
+				'errors': [{ 'msg': 'Method field is missing.' }]
+			}, done);
+	});
+
+
+	it('Responds 400 to missing method on request body.', done => {
+
+		const requestBody = {
+			'name': faker.name.findName(),
+			'nickname': faker.internet.userName(),
+			'email': faker.internet.email(),
+			'password': faker.internet.password()
+		};
+
+		request(app)
+			.post('/api/signup')
+			.send(requestBody)
+			.expect('Content-Type', /json/u)
+			.expect(400, {
+				'errors': [{ 'msg': 'Method field is missing.' }]
+			}, done);
+	});
+
+
+	it('Responds 400 to invalid method on request body.', done => {
+
+		const requestBody = {
+			'method': faker.random.word(),
+			'name': faker.name.findName(),
+			'nickname': faker.internet.userName(),
+			'email': faker.internet.email(),
+			'password': faker.internet.password()
+		};
+
+		request(app)
+			.post('/api/signup')
+			.send(requestBody)
+			.expect('Content-Type', /json/u)
+			.expect(400, {
+				'errors': [{ 'msg': 'Method field is invalid.' }]
+			}, done);
+	});
+
 
 	describe('Check for signup using the local method.', () => {
 
@@ -35,15 +85,10 @@ describe('Checks POST request on api/signup route:', () => {
 				.post('/api/signup')
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
+				.expect(/\{"token":"\w+\.\w+\.\w+"\}/u)
 				.expect(200, done);
 		});
 
-		it('Responds 400 to empty request body.', done => {
-			request(app)
-				.post('/api/signup')
-				.expect('Content-Type', /json/u)
-				.expect(400, done);
-		});
 
 		it('Responds 400 to incorrect email on request body.', done => {
 
@@ -51,7 +96,7 @@ describe('Checks POST request on api/signup route:', () => {
 				'method': 'local',
 				'name': faker.name.findName(),
 				'nickname': faker.internet.userName(),
-				'email': 'incorrectemail.com',
+				'email': 'incorrectemail.format',
 				'password': faker.internet.password()
 			};
 
@@ -59,10 +104,13 @@ describe('Checks POST request on api/signup route:', () => {
 				.post('/api/signup')
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
-				.expect(400, done);
+				.expect(400, {
+					'errors': [{ 'msg': 'Email format is incorrect.' }]
+				}, done);
 		});
 
-		it('Responds 400 to incorrect too short password on request body.', done => {
+
+		it('Responds 400 to incorrect, too short, password on request body.', done => {
 
 			const requestBody = {
 				'method': 'local',
@@ -76,8 +124,11 @@ describe('Checks POST request on api/signup route:', () => {
 				.post('/api/signup')
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
-				.expect(400, done);
+				.expect(400, {
+					'errors': [{ 'msg': 'Password should be at least 7 characters long.' }]
+				}, done);
 		});
+
 
 		it('Responds 400 to missing email on request body.', done => {
 
@@ -92,8 +143,11 @@ describe('Checks POST request on api/signup route:', () => {
 				.post('/api/signup')
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
-				.expect(400, done);
+				.expect(400, {
+					'errors': [{ 'msg': 'Email field missing.' }]
+				}, done);
 		});
+
 
 		it('Responds 400 to missing password on request body.', done => {
 
@@ -108,8 +162,11 @@ describe('Checks POST request on api/signup route:', () => {
 				.post('/api/signup')
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
-				.expect(400, done);
+				.expect(400, {
+					'errors': [{ 'msg': 'Password field missing.' }]
+				}, done);
 		});
+
 
 		it('Responds 400 to missing name on request body.', done => {
 
@@ -124,8 +181,11 @@ describe('Checks POST request on api/signup route:', () => {
 				.post('/api/signup')
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
-				.expect(400, done);
+				.expect(400, {
+					'errors': [{ 'msg': 'Name field missing.' }]
+				}, done);
 		});
+
 
 		it('Responds 400 to missing nickname on request body.', done => {
 
@@ -140,16 +200,19 @@ describe('Checks POST request on api/signup route:', () => {
 				.post('/api/signup')
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
-				.expect(400, done);
+				.expect(400, {
+					'errors': [{ 'msg': 'Nickname field missing.' }]
+				}, done);
 		});
 
-		it('Responds 403 when requested to create already existent user.', done => {
+
+		it('Responds 403 when requested to create user with existent nickname.', done => {
 			const requestBody = {
 				'method': 'local',
-				'name': 'test',
-				'nickname': 'test',
-				'email': 'test@test.com',
-				'password': 'testest'
+				'name': faker.name.findName(),
+				'nickname': 'John Doe',
+				'email': faker.internet.email(),
+				'password': faker.internet.password()
 			};
 
 			request(app)
@@ -157,7 +220,29 @@ describe('Checks POST request on api/signup route:', () => {
 				.send(requestBody)
 				.send(requestBody)
 				.expect('Content-Type', /json/u)
-				.expect(403, done);
+				.expect(403, {
+					'errors': [{ 'msg': 'A user already exists with this nickname.' }]
+				}, done);
+		});
+
+
+		it('Responds 403 when requested to create user with existent email.', done => {
+			const requestBody = {
+				'method': 'local',
+				'name': faker.name.findName(),
+				'nickname': faker.internet.userName(),
+				'email': 'test@test.com',
+				'password': faker.internet.password()
+			};
+
+			request(app)
+				.post('/api/signup')
+				.send(requestBody)
+				.send(requestBody)
+				.expect('Content-Type', /json/u)
+				.expect(403, {
+					'errors': [{ 'msg': 'A user already exists with this email.' }]
+				}, done);
 		});
 	});
 });
