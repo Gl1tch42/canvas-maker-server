@@ -20,16 +20,6 @@ describe('Checks if API is up:', () => {
 
 describe('Checks POST request on api/signup route:', () => {
 
-	it('Responds 400 to empty request body.', done => {
-		request(app)
-			.post('/api/signup')
-			.expect('Content-Type', /json/u)
-			.expect(400, {
-				'errors': ['Method field is missing.']
-			}, done);
-	});
-
-
 	it('Responds 400 to missing method on request body.', done => {
 
 		const requestBody = {
