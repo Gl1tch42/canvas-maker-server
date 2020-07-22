@@ -1,28 +1,25 @@
 import { ValidationError } from 'express-validator';
 
-interface Error {
-	msg: string
-}
 
 export default class RequestError {
 
-	static expressValidatorErrorsMsgCleaner(results: ValidationError[]):Error[] {
-		return results.map(error => ({ msg: error.msg }));
+	static expressValidatorErrorsMsgCleaner(results: ValidationError[]):string[] {
+		return results.map(error => error.msg);
 	}
 
-	static get missingMethod(): Error[] {
-		return [{ msg: 'Method field is missing.' }];
+	static get missingMethod():string[] {
+		return ['Method field is missing.'];
 	}
 
-	static get invalidMethod():Error[] {
-		return [{ msg: 'Method field is invalid.' }];
+	static get invalidMethod():string[] {
+		return ['Method field is invalid.'];
 	}
 
-	static get userNicknameAlreadyExists(): Error[] {
-		return [{ msg: 'A user already exists with this nickname.' }];
+	static get userNicknameAlreadyExists():string[] {
+		return ['A user already exists with this nickname.'];
 	}
 
-	static get userEmailAlreadyExists(): Error[] {
-		return [{ msg: 'A user already exists with this email.' }];
+	static get userEmailAlreadyExists(): string[] {
+		return ['A user already exists with this email.'];
 	}
 }
