@@ -257,4 +257,24 @@ describe('Checks POST request on api/signin route:', () => {
 				'errors': ['Method field is missing.']
 			}, done);
 	});
+
+
+	it('Responds 400 to invalid method on request body.', done => {
+
+		const requestBody = {
+			'method': faker.random.word(),
+			'name': faker.name.findName(),
+			'nickname': faker.internet.userName(),
+			'email': faker.internet.email(),
+			'password': faker.internet.password()
+		};
+
+		request(app)
+			.post('/api/signup')
+			.send(requestBody)
+			.expect('Content-Type', /json/u)
+			.expect(400, {
+				'errors': ['Method field is invalid.']
+			}, done);
+	});
 });
