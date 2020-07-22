@@ -73,17 +73,17 @@ export default class Validation {
 
 		if (existingUserAccount) {
 
-			const errors = [];
+			const forbittenUserErrors = [];
 
 			if (existingUserAccount.nickname === req.body.nickname) {
-				errors.push(RequestError.userNicknameAlreadyExists[0]);
+				forbittenUserErrors.push(RequestError.userNicknameAlreadyExists[0]);
 			}
 
 			if (existingUserAccount.email === req.body.email) {
-				errors.push(RequestError.userEmailAlreadyExists[0]);
+				forbittenUserErrors.push(RequestError.userEmailAlreadyExists[0]);
 			}
 
-			res.status(403).json({ errors });
+			res.status(403).json({ errors: forbittenUserErrors });
 
 			return;
 		}
