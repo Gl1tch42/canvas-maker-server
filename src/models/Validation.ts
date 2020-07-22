@@ -40,31 +40,18 @@ export default class Validation {
 
 		if (method === 'local') {
 			validations = [
-				body('name')
-					.exists()
-					.withMessage('Name field missing.')
-					.trim(),
+				body('name').exists().withMessage('Name field missing.').trim(),
 
-				body('nickname')
-					.exists()
-					.withMessage('Nickname field missing.')
-					.trim(),
+				body('nickname').exists().withMessage('Nickname field missing.').trim(),
 
-				body('email')
-					.exists()
-					.withMessage('Email field missing.')
+				body('email').exists().withMessage('Email field missing.')
 					.if(body('email').exists())
-					.trim()
-					.isEmail()
-					.normalizeEmail()
-					.withMessage('Email field is invalid. Email format is incorrect.'),
+					.trim().isEmail()
+					.normalizeEmail().withMessage('Email format is incorrect.'),
 
-				body('password')
-					.exists()
-					.withMessage('Password field missing.')
+				body('password').exists().withMessage('Password field missing.')
 					.if(body('password').exists())
-					.isLength({ min: 7 })
-					.withMessage('Password field is invalid. Password should be at least 7 characters long.')
+					.isLength({ min: 7 }).withMessage('Password should be at least 7 characters long.')
 			];
 		}
 		else {
@@ -110,21 +97,13 @@ export default class Validation {
 
 		if (method === 'local') {
 			validations = [
-				body('email')
-					.exists()
-					.withMessage('Email field missing.')
+				body('email').exists().withMessage('Email field missing.')
 					.if(body('email').exists())
-					.trim()
-					.isEmail()
-					.normalizeEmail()
-					.withMessage('Email field is invalid. Email format is incorrect.'),
+					.trim().isEmail().normalizeEmail().withMessage('Email format is incorrect.'),
 
-				body('password')
-					.exists()
-					.withMessage('Password field missing.')
+				body('password').exists().withMessage('Password field missing.')
 					.if(body('password').exists())
-					.isLength({ min: 7 })
-					.withMessage('Password field is invalid. Password should be at least 7 characters long.')
+					.isLength({ min: 7 }).withMessage('Password should be at least 7 characters long.')
 			];
 		}
 		else {
