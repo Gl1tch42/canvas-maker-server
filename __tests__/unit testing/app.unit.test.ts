@@ -12,7 +12,7 @@ describe('Checks if API is up:', () => {
 
 	it('Responds 404 when request GET to wrong route.', done => {
 		request(app)
-			.get('/api/wrong-random-path')
+			.get(`/api/${ faker.random.word() }`)
 			.expect(404, done);
 	});
 });
