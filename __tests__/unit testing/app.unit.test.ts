@@ -325,5 +325,23 @@ describe('Checks POST request on api/signin route:', () => {
 					'errors': ['Password field missing.']
 				}, done);
 		});
+
+
+		it('Responds 404 to unexisting email account on request body.', done => {
+
+			const signinRequestBody = {
+				'method': 'local',
+				'email': faker.internet.email(),
+				'password': faker.internet.password()
+			};
+
+			request(app)
+				.post('/api/signin')
+				.send(signinRequestBody)
+				.expect('Content-Type', /json/u)
+				.expect(404, {
+					'errors': ['A user with this email does not exist.']
+				}, done);
+		});
 	});
 });
