@@ -30,4 +30,8 @@ export default class RequestError {
 	static get incorrectPassword(): string[] {
 		return ['Incorrect password.'];
 	}
+
+	static get missingAuthHeader(): string[] {
+		return ['Authorization field in missing on the header.'];
+	}
 }
