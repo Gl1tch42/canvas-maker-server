@@ -123,5 +123,24 @@ export default class Validation {
 		next();
 	}
 
+
+	public static getToken(req: Request, res: Response, next: NextFunction): void {
+
+		const bearesHeader = req.headers.authorization;
+
+		if (typeof bearesHeader === 'undefined') {
+			const errors = RequestError.missingAuthHeader;
+			res.status(403).json({ errors });
+			return;
+		}
+
+		const token = bearesHeader.split(' ').pop();
+		req.push(token);
+
+		console.log(req);
+
+		next();
+	}
+
 }
 
