@@ -4,3 +4,6 @@ node_modules/
 # Project configuration information that is not supposed to be shared.
 secure/*
 !secure/.gitkeep
+
+# Jest test`s code coverage.
+coverage/
