@@ -34,7 +34,7 @@ export default class UserController {
 		}
 		catch (error) {
 			console.log(error);
-			return res.status(500).send();
+			return res.sendStatus(500);
 		}
 	}
 
@@ -58,7 +58,7 @@ export default class UserController {
 		}
 		catch (error) {
 			console.log(error);
-			return res.status(500).send();
+			return res.sendStatus(500);
 		}
 	}
 
