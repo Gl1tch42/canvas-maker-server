@@ -1,6 +1,8 @@
 import { Router, Response } from 'express';
 import userController from './controllers/UserController';
 import Validation from './models/Validation';
+import Authentication from './controllers/Authentication';
+
 
 const routes = Router();
 
