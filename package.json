@@ -4,8 +4,8 @@
   "description": "Canvas Maker is an online tool to help entrepreneurs design their canval and start developing their company.",
   "main": "src/index.ts",
   "scripts": {
-    "build": "ts-node src/index.ts",
-    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "dev": "nodemon -T src/index.ts",
     "test": "jest --detectOpenHandles",
     "coverage": "jest --coverage"
   },
