@@ -3,6 +3,13 @@ import RequestError from '../models/RequestError';
 import jwt from 'jsonwebtoken';
 
 
+interface Token {
+	userId: number,
+	iat: number,
+	exp: number,
+	iss: string
+}
+
 export default class Authentication {
 
 	public static getToken(req: Request, res: Response, next: NextFunction): void {
