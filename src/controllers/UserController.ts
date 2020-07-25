@@ -17,6 +17,12 @@ export default class UserController {
 		});
 	}
 
+	private static genRefreshToken(userId:number):string {
+		const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET!);
+
+		return refreshToken;
+	}
+
 	public static async signUp (req: Request, res: Response): Promise<Response> {
 
 		try {
