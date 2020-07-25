@@ -16,6 +16,6 @@ routes.post('/signin',
 	Validation.signin,
 	userController.signIn);
 
-// routes.get('/secret', userController.secret);
+routes.post('/token', Authentication.refreshToken);
 
 export default routes;
