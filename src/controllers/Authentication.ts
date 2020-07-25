@@ -14,7 +14,7 @@ interface Token {
 
 export default class Authentication {
 
-	public static getToken(req: Request, res: Response, next: NextFunction): void {
+	public static getAccessToken(req: Request, res: Response, next: NextFunction): void {
 
 		const bearesHeader = req.headers.authorization;
 
@@ -28,8 +28,15 @@ export default class Authentication {
 
 		jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (error, authData) => {
 			if (error) {
-				console.log(error);
-				res.sendStatus(403);
+
+				if (error.message === 'jwt expired') {
+					res.status(403).send({ errors: RequestError.tokenExpired });
+				}
+				else {
+					console.log(error);
+					res.status(403).send();
+				}
+
 				return;
 			}
 
