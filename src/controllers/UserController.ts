@@ -47,14 +47,16 @@ export default class UserController {
 				return res.status(404).json({ 'errors': RequestError.userDoesNotExist });
 
 
-			const match = await bcrypt.compare(req.body.password, localUser.password);
+			const isPasswordRight = await bcrypt.compare(req.body.password, localUser.password);
 
-			if (!match)
+			if (!isPasswordRight)
 				return res.status(401).json({ 'errors': RequestError.incorrectPassword });
 
 
-			const token = UserController.signToken(localUser.AccountsId);
-			return res.status(200).json({ token });
+			const accessToken = UserController.genAccessToken(localUser.AccountsId);
+			const refreshToken = UserController.genRefreshToken(localUser.AccountsId);
+
+			return res.status(200).json({ accessToken, refreshToken });
 		}
 		catch (error) {
 			console.log(error);
