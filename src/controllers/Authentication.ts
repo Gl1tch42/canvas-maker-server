@@ -47,4 +47,35 @@ export default class Authentication {
 			next();
 		});
 	}
+
+	public static refreshToken(req: Request, res: Response): Response {
+
+		const headerRefreshToken = req.headers.refreshToken;
+
+		if (typeof headerRefreshToken === 'undefined') {
+			const errors = RequestError.missingAuthHeader;
+			return res.status(403).json({ errors });
+		}
+
+		const refreshToken = headerRefreshToken.split(' ')[1];
+
+		jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!, (error, authData) => {
+			if (error) {
+				console.log(error);
+				return res.status(403).send();
+			}
+
+			const varifiedToken = <Token>authData;
+
+			const userId = varifiedToken.userId;
+
+			const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET!, {
+				expiresIn: '15m'
+			});
+
+			return res.status(200).json({ accessToken });
+		});
+
+		return res.sendStatus(500);
+	}
 }
