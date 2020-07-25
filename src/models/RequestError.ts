@@ -34,4 +34,8 @@ export default class RequestError {
 	static get missingAuthHeader(): string[] {
 		return ['Authorization field in missing on the header.'];
 	}
+
+	static get tokenExpired(): string[] {
+		return ['Your access token expired.'];
+	}
 }
