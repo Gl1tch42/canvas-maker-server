@@ -10,9 +10,8 @@ dotenv.config({ path: 'secure/.env' });
 
 export default class UserController {
 
-	private static signToken(userId:number):string {
+	private static genAccessToken(userId:number):string {
 		return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET!, {
-			issuer: 'Canvas Maker',
 			expiresIn: '15m'
 		});
 	}
@@ -34,15 +33,17 @@ export default class UserController {
 			const userId = await UserQueries.createLocalUser(userName, userNickname, userEmail, userHashedPassword);
 
 
-			const token = UserController.signToken(userId);
+			const accessToken = UserController.genAccessToken(userId);
+			const refreshToken = UserController.genRefreshToken(userId);
 
-			return res.status(200).json({ token });
+			return res.status(200).json({ accessToken, refreshToken });
 		}
 		catch (error) {
 			console.log(error);
 			return res.sendStatus(500);
 		}
 	}
+
 
 	public static async signIn(req: Request, res: Response): Promise<Response> {
 
