@@ -1,5 +1,7 @@
 <p align="right">
-	<img src="https://img.shields.io/github/license/ViniciusALS/canvas-maker-server" alt="license badge"> <img src="https://img.shields.io/github/last-commit/ViniciusALS/canvas-maker-server" alt="last commit badge">
+	<img src="https://img.shields.io/github/license/ViniciusALS/canvas-maker-server" alt="license badge"> 
+  <img src="https://img.shields.io/github/last-commit/ViniciusALS/canvas-maker-server" alt="last commit badge"> 
+  <img src="https://img.shields.io/github/workflow/status/ViniciusALS/canvas-maker-server/Node.js%20CI?label=test" alt="test badge">
 </p>
 
 ## ![Canvas Maker](./.github/resources/logo.png)
