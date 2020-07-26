@@ -1,7 +1,7 @@
 import { Router, Response } from 'express';
 import userController from './controllers/UserController';
 import Validation from './models/Validation';
-import Authentication from './controllers/Authentication';
+import authController from './controllers/AuthContoller';
 
 
 const routes = Router();
@@ -16,6 +16,6 @@ routes.post('/signin',
 	Validation.signin,
 	userController.signIn);
 
-routes.post('/token', Authentication.refreshToken);
+routes.post('/token', authController.refreshToken);
 
 export default routes;
