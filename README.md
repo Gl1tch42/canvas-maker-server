@@ -10,6 +10,14 @@ Canvas Maker is an online tool to help entrepreneurs design their canval and sta
 
 </br>
 
+> # Personal Notes
+>
+> I started this projected for two reasons. The first one being that I wanted to practice building an entire application from scratch. I had never done anything on this level and I wanted to challenge myself. 
+> The other reason why I started this project was because I wanted a tool that to my surprise did not exist yet, canvas is a bussinel model to help entreprenours materialize there ideas and I could never find a good online tool to make it.
+> In order to build this project, I had to learn many new technologies that I had not had the time to use so far like typescript, how to do unit and integration tests using jest.js and how to deal with user authentication and authorization.
+> The project is not done yet but I am exited to finish and any help is welcomed.
+
+
 # Server
 
 This repository contains all files related to the Canvas Maker server. If you are looking for the front end aplication for Canvas Maker click [here](#).
