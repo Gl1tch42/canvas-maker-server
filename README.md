@@ -36,12 +36,18 @@ Canvas Maker`s server require the following software to work:
 - [MySQL](https://dev.mysql.com/doc/mysql-getting-started/en/#mysql-getting-started-installing)
 
 
-## Running Project
+## Running and Developing This Project
 
 - Clone this repository.
 - Run `npm install` to install all dependencies.
-- Run `npm build` to start the local server, or `npm dev` to develop.
+- Run `npm build` to compile project into the public folder.
+
+Or
+
+- Run `npm run dev` to start the local server and develop.
 - Use `http://localhost:3000` to interact with server.
+- Run `npm test` to test any modification with jest.
+- Run `npm run coverage` to check the code coverage of your tests.
 
 
 ## Built With
