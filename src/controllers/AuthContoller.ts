@@ -14,6 +14,18 @@ interface Token {
 
 export default class Authentication {
 
+	public static genAccessToken(userId:number):string {
+		return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET!, {
+			expiresIn: '15m'
+		});
+	}
+
+	public static genRefreshToken(userId:number):string {
+		const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET!);
+
+		return refreshToken;
+	}
+
 	public static getAccessToken(req: Request, res: Response, next: NextFunction): void {
 
 		const bearesHeader = req.headers.authorization;

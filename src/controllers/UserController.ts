@@ -2,25 +2,13 @@ import dotenv from 'dotenv';
 import { Request, Response } from 'express';
 import UserQueries from '../database/UserQueries';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import RequestError from '../models/RequestError';
+import authController from './AuthContoller';
 
 dotenv.config({ path: 'secure/.env' });
 
 
 export default class UserController {
-
-	private static genAccessToken(userId:number):string {
-		return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET!, {
-			expiresIn: '15m'
-		});
-	}
-
-	private static genRefreshToken(userId:number):string {
-		const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET!);
-
-		return refreshToken;
-	}
 
 	public static async signUp (req: Request, res: Response): Promise<Response> {
 
@@ -33,8 +21,8 @@ export default class UserController {
 			const userId = await UserQueries.createLocalUser(userName, userNickname, userEmail, userHashedPassword);
 
 
-			const accessToken = UserController.genAccessToken(userId);
-			const refreshToken = UserController.genRefreshToken(userId);
+			const accessToken = authController.genAccessToken(userId);
+			const refreshToken = authController.genRefreshToken(userId);
 
 			return res.status(200).json({ accessToken, refreshToken });
 		}
@@ -60,8 +48,8 @@ export default class UserController {
 				return res.status(401).json({ 'errors': RequestError.incorrectPassword });
 
 
-			const accessToken = UserController.genAccessToken(localUser.AccountsId);
-			const refreshToken = UserController.genRefreshToken(localUser.AccountsId);
+			const accessToken = authController.genAccessToken(localUser.AccountsId);
+			const refreshToken = authController.genRefreshToken(localUser.AccountsId);
 
 			return res.status(200).json({ accessToken, refreshToken });
 		}
