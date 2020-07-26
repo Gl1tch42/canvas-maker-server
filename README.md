@@ -52,20 +52,26 @@ Or
 
 ## Built With
 
-- [typescript](#) - JavaScript that scales
-<!-- - [express.js](http://expressjs.com/)
-- [xss clean](https://github.com/jsonmaur/xss-clean)
-- [express validator](https://express-validator.github.io/docs/)
-- [mysql2](https://www.npmjs.com/package/mysql2) -->
+This project was build using the following technologies. You can check their individual documentations by going to:
+
+- [Node.js](https://nodejs.org/en/) - JavaScript runtime built on Chrome's V8 JavaScript engine.
+- [typescript](https://www.typescriptlang.org/) - JavaScript that scales.
+- [express.js](http://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js.
+- [express validator](https://express-validator.github.io/docs/) - express.js middlewares that wraps validator and sanitizer functions.
+- [mysql2](https://www.npmjs.com/package/mysql2) - MySQL client for Node.js with focus on performance.
+- [bcrypt](https://www.npmjs.com/package/bcrypt) - A library to help you hash passwords.
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - An implementation of JSON Web Tokens.
 
 
 ## Developing Tools Used
 
-- [eslint](https://eslint.org/docs/user-guide/getting-started)
-- [ts-node](#)
-- [ts-node-dev](#)
-- [jest](https://jestjs.io/docs/en/getting-started) - Delightful JavaScript Testing
-<!-- - [supertest](https://www.npmjs.com/package/supertest) -->
+This project was build using the following devoloping technologies. You can check their individual documentations by going to:
+
+- [eslint](https://eslint.org/docs/user-guide/getting-started) - Find and fix problems in your JavaScript code.
+- [ts-node](https://www.npmjs.com/package/ts-node) - TypeScript execution environment and REPL for node.js
+- [nodemon](https://www.npmjs.com/package/nodemon) - Simple monitor script for use during development of a node.js app.
+- [jest](https://jestjs.io/docs/en/getting-started) - Delightful JavaScript Testing.
+- [supertest](https://www.npmjs.com/package/supertest) - SuperAgent driven library for testing HTTP servers.
 
 <!--
 ## Usage
