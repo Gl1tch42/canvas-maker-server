@@ -20,11 +20,13 @@ export default class Authentication {
 		});
 	}
 
+
 	public static genRefreshToken(userId:number):string {
 		const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET!);
 
 		return refreshToken;
 	}
+
 
 	public static getAccessToken(req: Request, res: Response, next: NextFunction): void {
 
@@ -59,6 +61,7 @@ export default class Authentication {
 			next();
 		});
 	}
+
 
 	public static refreshToken(req: Request, res: Response): Response {
 
